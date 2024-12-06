@@ -1,43 +1,39 @@
 package com.ticketing.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "tickets")
 public class Ticket {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Automatically generate the ID
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "vendor_id", nullable = false)
-    private Vendor vendor;
+    private String eventName;
+    private int totalTickets;
+    private int ticketReleaseRate;
+    private int customerRetrievalRate;
+    private int maxTicketCapacity;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = true) // Nullable for unbooked tickets
-    private Customer customer;
 
-    @Column(nullable = false)
-    @NotEmpty(message = "Title cannot be empty")
-    private String title;
-
-    @Column(nullable = false)
-    private boolean isAvailable;
-
+    // Default constructor
     public Ticket() {
     }
 
-    public Ticket(Long id, Vendor vendor, Customer customer, String title, boolean isAvailable) {
-        this.id = id;
-        this.vendor = vendor;
-        this.customer = customer;
-        this.title = title;
-        this.isAvailable = isAvailable;
+    // Parameterized constructor
+    public Ticket(String eventName, int totalTickets, int ticketReleaseRate, int customerRetrievalRate, int maxTicketCapacity) {
+        this.eventName = eventName;
+        this.totalTickets = totalTickets;
+        this.ticketReleaseRate = ticketReleaseRate;
+        this.customerRetrievalRate = customerRetrievalRate;
+        this.maxTicketCapacity = maxTicketCapacity;
     }
 
-    // Getters and setters
+    // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -46,36 +42,43 @@ public class Ticket {
         this.id = id;
     }
 
-    public Vendor getVendor() {
-        return vendor;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public int getTotalTickets() {
+        return totalTickets;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setTotalTickets(int totalTickets) {
+        this.totalTickets = totalTickets;
     }
 
-    public String getTitle() {
-        return title;
+    public int getTicketReleaseRate() {
+        return ticketReleaseRate;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTicketReleaseRate(int ticketReleaseRate) {
+        this.ticketReleaseRate = ticketReleaseRate;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public int getCustomerRetrievalRate() {
+        return customerRetrievalRate;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setCustomerRetrievalRate(int customerRetrievalRate) {
+        this.customerRetrievalRate = customerRetrievalRate;
+    }
+
+    public int getMaxTicketCapacity() {
+        return maxTicketCapacity;
+    }
+
+    public void setMaxTicketCapacity(int maxTicketCapacity) {
+        this.maxTicketCapacity = maxTicketCapacity;
     }
 }
-

@@ -1,67 +1,29 @@
 package com.ticketing.services;
 
-import com.ticketing.entities.Customer;
 import com.ticketing.entities.Ticket;
-import com.ticketing.entities.Vendor;
-import com.ticketing.repositories.CustomerRepository;
 import com.ticketing.repositories.TicketRepository;
-import com.ticketing.repositories.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TicketService {
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
     @Autowired
-    private VendorRepository vendorRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    public Ticket createTicket(Long vendorId, Ticket ticket) {
-        Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() -> new RuntimeException("Vendor not found"));
-        ticket.setVendor(vendor);
-        ticket.setAvailable(true); // Newly created tickets are available by default
-        return ticketRepository.save(ticket);
+    public TicketService(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
     }
 
-    public Ticket bookTicket(Long ticketId, Long customerId) {
-        Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new RuntimeException("Ticket not found"));
-        if (!ticket.isAvailable()) {
-            throw new IllegalStateException("Ticket is already booked.");
-        }
-
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
-
-        ticket.setCustomer(customer);
-        ticket.setAvailable(false);
-        return ticketRepository.save(ticket);
+    // Save a new ticket configuration or update an existing one
+    public void saveConfiguration(Ticket ticket) {
+        ticketRepository.save(ticket);
     }
 
-    public List<Ticket> getAvailableTickets() {
-        return ticketRepository.findByIsAvailable(true);
-    }
-
-    public Ticket updateTicket(Long ticketId, Ticket ticketDetails) {
-        Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new RuntimeException("Ticket not found"));
-
-        ticket.setTitle(ticketDetails.getTitle());
-        return ticketRepository.save(ticket);
-    }
-
-    public void deleteTicket(Long ticketId) {
-        Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new RuntimeException("Ticket not found"));
-        ticketRepository.delete(ticket);
+    // Retrieve the current ticket configuration
+    public Optional<Ticket> getConfiguration() {
+        return ticketRepository.findById(1L);  // Assuming one configuration is stored, always fetch the record with id 1
     }
 }
-

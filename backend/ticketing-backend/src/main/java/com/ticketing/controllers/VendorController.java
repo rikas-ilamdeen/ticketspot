@@ -1,7 +1,9 @@
 package com.ticketing.controllers;
 
 import com.ticketing.entities.Vendor;
+import com.ticketing.services.TicketPoolService;
 import com.ticketing.services.VendorService;
+import com.ticketing.threads.VendorThread;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ public class VendorController {
 
     @Autowired
     private VendorService vendorService;
+
+    @Autowired
+    private TicketPoolService ticketPoolService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerVendor(@Valid @RequestBody Vendor vendor) {
@@ -62,6 +67,22 @@ public class VendorController {
             return ResponseEntity.ok().body("Vendor deleted successfully!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // Endpoint to add tickets by vendor
+    @PostMapping("/addTickets/{vendorId}/{numberOfTickets}")
+    public ResponseEntity<?> addTickets(@PathVariable Long vendorId, @PathVariable int numberOfTickets) {
+        try {
+            // Create a new VendorThread with the received data
+            VendorThread vendorThread = new VendorThread(ticketPoolService, vendorId, numberOfTickets);
+
+            // Start the thread
+            new Thread(vendorThread).start();
+
+            return ResponseEntity.ok("Vendor thread started to add tickets.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to start the vendor thread: " + e.getMessage());
         }
     }
 }
