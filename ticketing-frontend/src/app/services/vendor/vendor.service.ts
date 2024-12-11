@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Define vendor type (can be similar to customer)
+// Define vendor type
 export interface signupInput {
   name: string;
   email: string;
@@ -17,7 +17,7 @@ export interface loginInput {
   providedIn: 'root',
 })
 export class VendorService {
-  private apiUrl = 'http://localhost:8080/api'; // Update with your vendor API URL
+  private apiUrl = 'http://localhost:8080/api'; // Update vendor API URL
 
   constructor(private http: HttpClient) {}
 

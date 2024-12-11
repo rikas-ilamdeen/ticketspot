@@ -30,11 +30,4 @@ public class TicketEventController {
         System.out.println("Sending event: " + event); // Log event
         return ResponseEntity.ok(event);
     }
-//    @GetMapping("/api/sendEvent")
-//    public void sendEventUpdate() {
-//        Optional<Ticket> event = ticketService.getConfiguration();
-//        System.out.println("Sending event update: " + event); // Log event
-//        messagingTemplate.convertAndSend("/topic/event", event.orElse(null));
-//    }
-
 }

@@ -25,7 +25,7 @@ export class AppComponent {
     return user.name ? `Welcome, ${user.name}` : '';   }
 
   isEventPage(): boolean {
-    return this.router.url === '/event' || this.router.url === '/dashboard'; // Adjust '/event' based on your route
+    return this.router.url === '/event' || this.router.url === '/dashboard';
   }
    // Method to log out
   logout() {

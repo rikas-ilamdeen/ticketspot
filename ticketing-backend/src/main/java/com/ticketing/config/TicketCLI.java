@@ -57,7 +57,7 @@ public class TicketCLI implements CommandLineRunner {
 
         // Save the new ticket configuration
         Ticket newConfig = new Ticket();
-        newConfig.setEventName("Movie");
+        newConfig.setEventName("Avatar");
         newConfig.setTotalTickets(totalTickets);
         newConfig.setTicketReleaseRate(ticketReleaseRate);
         newConfig.setCustomerRetrievalRate(customerRetrievalRate);

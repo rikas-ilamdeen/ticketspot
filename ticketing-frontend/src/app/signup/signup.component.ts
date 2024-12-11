@@ -70,7 +70,7 @@ export class SignUpComponent {
   }
 
   validatePhoneNumber(): boolean {
-    const phoneRegex = /^\d{10}$/; // Adjust as per your phone number format
+    const phoneRegex = /^\d{10}$/;
     if (!this.signup.phoneNumber) {
       this.phoneError = 'Phone number is required.';
       return false;

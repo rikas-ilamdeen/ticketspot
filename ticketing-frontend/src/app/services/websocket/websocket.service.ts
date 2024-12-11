@@ -9,7 +9,7 @@ import { Event } from '../../event/event.model';
 })
 export class WebSocketService {
   private stompClient: Client;
-  private serverUrl = 'http://localhost:8080/ws'; // Update with your server URL
+  private serverUrl = 'http://localhost:8080/ws'; // Update server URL
 
   constructor() {
     this.stompClient = new Client({
@@ -28,7 +28,7 @@ export class WebSocketService {
       this.stompClient.onConnect = () => {
         console.log('Connected to WebSocket');
         
-        // Subscribe to the event topic from your controller
+        // Subscribe to the event topic from controller
         this.stompClient.subscribe('/topic/event', (message: any) => {
           try {
             const ticket: Event = JSON.parse(message.body);

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, FormsModule], // Import FormsModule into your component
+  imports: [CommonModule, FormsModule],
 })
 export class LoginComponent {
   loginData = {

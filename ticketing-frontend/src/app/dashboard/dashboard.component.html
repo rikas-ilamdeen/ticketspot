@@ -1,15 +1,26 @@
 <div class="card mb-3">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img [src]="'https://via.placeholder.com/150'" class="card-img" alt="Event Image">
+        <img [src]="'assets/avatar.jpeg'" class="card-img" alt="Event Image">
       </div>
       <div class="col-md-8">
         <div  class="card-body">
           <h5 class="card-title">{{ event.eventName || 'Event Title' }}</h5>
-          <p class="card-text">{{ event.price || 'Description not available' }}</p>
-          <p class="card-text">{{ event.totalTickets || 'Description not available' }}</p>
-          <p class="card-text"><small class="text-muted">{{ event.eventDate || 'Date not available' }}</small></p>
-          <p class="card-text"><small class="text-muted">{{ event.eventTime || 'Date not available' }}</small></p>
+          <p class="card-text">
+            <strong>Price:</strong><small class="text-muted"></small> {{ event.price || 'Description not available' }}
+          </p>
+          <p class="card-text">
+            <strong>Available Tickets:</strong><small class="text-muted"></small> {{ event.totalTickets || 'Description not available' }}
+          </p>
+          
+          <!-- Event Date and Time with Labels -->
+          <p class="card-text">
+            <strong>Date: </strong><small class="text-muted">{{ event.eventDate || 'Date not available' }}</small>
+          </p>
+          <p class="card-text">
+            <strong>Time: </strong><small class="text-muted">{{ event.eventTime || 'Time not available' }}</small>
+          </p>
+          
           <button id="bookNowId" class="btn btn-primary" (click)="toggleSlide()">Add Ticket</button>
         </div>
       </div>

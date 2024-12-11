@@ -10,6 +10,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },  // Login route
   { path: 'signup', component: SignUpComponent },  // SignUp route
   { path: 'event', component: EventComponent },  // Event route
-  { path: 'dashboard', component: DashboardComponent },  // dashboard route
+  { path: 'dashboard', component: DashboardComponent },  // Dashboard route
   { path: '**', redirectTo: '' }  // Wildcard route to redirect invalid URLs to Home
 ];

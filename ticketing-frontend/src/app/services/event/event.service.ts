@@ -8,7 +8,7 @@ import { Event } from '../../event/event.model';
 })
 export class EventService {
 
-  private baseUrl = 'http://localhost:8080'; // Update with your server URL
+  private baseUrl = 'http://localhost:8080'; // server URL
 
   constructor(private http: HttpClient) {}
 

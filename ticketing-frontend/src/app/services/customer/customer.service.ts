@@ -18,7 +18,7 @@ export interface signupInput {
   providedIn: 'root',
 })
 export class CustomerService {
-  private apiUrl = 'http://localhost:8080/api'; // Your Spring Boot API URL
+  private apiUrl = 'http://localhost:8080/api'; // Spring Boot API URL
 
   constructor(private http: HttpClient) {}
 
@@ -35,5 +35,5 @@ export class CustomerService {
     const body = { customerId, ticketPurchaseCount };
     return this.http.post(`${this.apiUrl}/customer/buy`, body);
   }
-  // Other methods like getAllCustomers, getCustomerById, etc. can be added here
+  
 }

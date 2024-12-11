@@ -59,7 +59,7 @@ public class TicketPoolService {
                 System.out.println(error);
             }
             else {
-                error = "Cannot add tickets. Max capacity reached.";
+                error = "Can not add tickets. Maximum capacity reached.";
                 System.out.println(error);
             }
             return error;
@@ -97,11 +97,11 @@ public class TicketPoolService {
                 customerTicketLog.setCustomerId(customerId);
                 customerLogRepository.save(customerTicketLog);
 
-                error = "Booked " + ticketPurchaseCount + " tickets.";
+                error = "Purchased " + ticketPurchaseCount + " tickets.";
                 System.out.println(error);
 
             } else if (ticket.getTotalTickets() > 0) {
-                error = "Only "+ ticket.getTotalTickets() +" ticket/tickets available for the event: ";
+                error = "Only "+ ticket.getTotalTickets() +" tickets available for the event: " + ticket.getEventName();
                 System.out.println(error);
             } else {
                 error = "No tickets available for event: " + ticket.getEventName();

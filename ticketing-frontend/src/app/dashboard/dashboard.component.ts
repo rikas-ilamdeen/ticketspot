@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WebSocketService } from '../services/websocket/websocket.service';
-import { Event } from '../event/event.model'; // Adjust the path based on your file structure
+import { Event } from '../event/event.model';
 import { Subscription } from 'rxjs';
 import { EventService } from '../services/event/event.service';
 import { VendorService } from '../services/vendor/vendor.service';
-import { Router } from '@angular/router';  // Import the Router for navigation
+import { Router } from '@angular/router'; 
 
 
 @Component({
@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     eventTime: '',
     price: 0.0,
     totalTickets: 0
-  }; // Initialize the event with default values// Initialize with an empty object
+  }; // Initialize the event with default values
   private subscription: Subscription | null = null;
 
   constructor(

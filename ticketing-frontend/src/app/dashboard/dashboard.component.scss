@@ -57,9 +57,13 @@
     text-align: center;
     margin-top: auto; /* Push to the bottom */
     //padding-top: 10px;
-    border-top: 1px solid #ddd; /* Optional: Add a separator line */
+    border-top: 1px solid #ddd; /* Add a separator line */
   }
   
   .slide-footer .btn {
     width: 100%; /* Full-width Cancel button */
+  }
+
+  .card-text {
+    color: #555;
   }
