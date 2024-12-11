@@ -1,0 +1,83 @@
+<div class="sign-up-container">
+    <div class="sign-up-form">
+      <h2>Create an Account</h2>
+  
+      <form (submit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <input
+              id="name"
+              type="text"
+              placeholder="Enter your name"
+              [(ngModel)]="signup.name"
+              name="name"
+              (input)="validateName()"
+            />
+            <span class="error-message" *ngIf="nameError">{{ nameError }}</span>
+          </div>
+  
+          <div class="form-group">
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              [(ngModel)]="signup.email"
+              name="email"
+              (input)="validateEmail()"
+            />
+            <span class="error-message" *ngIf="emailError">{{ emailError }}</span>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              [(ngModel)]="signup.password"
+              name="password"
+              (input)="validatePassword()"
+            />
+            <span class="error-message" *ngIf="passwordError">{{ passwordError }}</span>
+          </div>
+  
+          <div class="form-group">
+            <input
+              id="phone"
+              type="tel"
+              placeholder="Enter your phone number"
+              [(ngModel)]="signup.phoneNumber"
+              name="phone"
+              (input)="validatePhoneNumber()"
+            />
+            <span class="error-message" *ngIf="phoneError">{{ phoneError }}</span>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="user-type">Select User Type</label>
+          <div class="user-type">
+            <input
+              type="radio"
+              id="vendor"
+              name="userType"
+              value="vendor"
+              [(ngModel)]="selectedRole"
+            />
+            Vendor
+            <input
+              type="radio"
+              id="customer"
+              name="userType"
+              value="customer"
+              [(ngModel)]="selectedRole"
+            />
+            Customer
+          </div>
+        </div>
+  
+        <button type="submit" class="cta-button">Sign Up</button>
+      </form>
+    </div>
+  </div>

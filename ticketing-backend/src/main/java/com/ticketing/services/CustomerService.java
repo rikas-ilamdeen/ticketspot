@@ -6,37 +6,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public Customer registerCustomer(Customer customer) {
         // Check if email already exists
-        if (customerRepository.findByEmail(customer.getEmail()).isPresent()) {
+        if (!customerRepository.findAll()
+                .stream()
+                .noneMatch(c -> c.getEmail().equals(customer.getEmail()))) {
             throw new IllegalArgumentException("Email already registered.");
         }
 
         // Hash password before saving
-        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+//        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
 
         // Save the new customer
         return customerRepository.save(customer);
     }
 
-    public String loginCustomer(String email, String password) {
+    public Customer loginCustomer(String email, String password) {
         // Retrieve customer by email
-        Customer customer = customerRepository.findByEmail(email)
+        Customer customer = customerRepository.findAll()
+                .stream()
+                .filter(c -> c.getEmail().equals(email))
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
         // Verify the hashed password
-        if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
-            throw new IllegalArgumentException("Invalid email or password.");
-        }
+//        if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
+//            throw new IllegalArgumentException("Invalid email or password.");
+//        }
 
-        return "Login successful!";
+        return customer;
+    }
+
+    // Retrieve all customers
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll(); // Fetch all customers from the repository
     }
 
     // Get a customer by their ID
@@ -55,9 +67,9 @@ public class CustomerService {
         customer.setName(customerDetails.getName());
 
         // Hash the password if it's updated
-        if (!customerDetails.getPassword().equals(customer.getPassword())) {
-            customer.setPassword(bCryptPasswordEncoder.encode(customerDetails.getPassword()));
-        }
+//        if (!customerDetails.getPassword().equals(customer.getPassword())) {
+//            customer.setPassword(bCryptPasswordEncoder.encode(customerDetails.getPassword()));
+//        }
 
         return customerRepository.save(customer);
     }

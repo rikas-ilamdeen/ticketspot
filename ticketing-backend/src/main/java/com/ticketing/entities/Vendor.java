@@ -30,16 +30,19 @@ public class Vendor {
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
+    private String phoneNumber;
+
     // Default constructor
     public Vendor() {
     }
 
     // Parameterized constructor
-    public Vendor(Long id, String email, String name, String password) {
+    public Vendor(Long id, String email, String name, String password, String phoneNumber) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     // Getters and Setters
@@ -75,6 +78,14 @@ public class Vendor {
         this.password = password;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     // toString() Method
     @Override
     public String toString() {
@@ -83,6 +94,7 @@ public class Vendor {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

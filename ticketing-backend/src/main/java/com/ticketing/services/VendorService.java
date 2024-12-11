@@ -7,38 +7,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VendorService {
 
     @Autowired
     private VendorRepository vendorRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public Vendor registerVendor(Vendor vendor) {
         // Check if email already exists
-        if (vendorRepository.findByEmail(vendor.getEmail()).isPresent()) {
+        if (!vendorRepository.findAll()
+                .stream()
+                .noneMatch(c -> c.getEmail().equals(vendor.getEmail()))) {
             throw new IllegalArgumentException("Email already registered.");
         }
 
         // Hash password before saving
-        vendor.setPassword(bCryptPasswordEncoder.encode(vendor.getPassword()));
+//        vendor.setPassword(bCryptPasswordEncoder.encode(vendor.getPassword()));
 
         // Save the new vendor
         return vendorRepository.save(vendor);
     }
 
-    public String loginVendor(String email, String password) {
+    public Vendor loginVendor(String email, String password) {
         // Retrieve vendor by email
-        Vendor vendor = vendorRepository.findByEmail(email)
+        Vendor vendor = vendorRepository.findAll()
+                .stream()
+                .filter(c -> c.getEmail().equals(email))
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
         // Verify the hashed password
-        if (!bCryptPasswordEncoder.matches(password, vendor.getPassword())) {
-            throw new IllegalArgumentException("Invalid email or password.");
-        }
+//        if (!bCryptPasswordEncoder.matches(password, vendor.getPassword())) {
+//            throw new IllegalArgumentException("Invalid email or password.");
+//        }
 
-        return "Login successful!";
+        return vendor;
+    }
+
+    // Retrieve all customers
+    public List<Vendor> getAllVendors() {
+        return vendorRepository.findAll(); // Fetch all vendors from the repository
     }
 
     public Vendor getVendorById(Long vendorId) {
@@ -47,8 +59,8 @@ public class VendorService {
                 .orElseThrow(() -> new RuntimeException("Vendor not found with ID: " + vendorId));
     }
 
-    public Vendor updateVendor(Long id, Vendor vendorDetails) {
-        Vendor vendor = vendorRepository.findById(id)
+    public Vendor updateVendor(Long vendorId, Vendor vendorDetails) {
+        Vendor vendor = vendorRepository.findById(vendorId)
                 .orElseThrow(() -> new IllegalArgumentException("Vendor not found."));
 
         // Update fields as needed
@@ -56,16 +68,16 @@ public class VendorService {
         vendor.setName(vendorDetails.getName());
 
         // Hash the password if it's updated
-        if (!vendorDetails.getPassword().equals(vendor.getPassword())) {
-            vendor.setPassword(bCryptPasswordEncoder.encode(vendorDetails.getPassword()));
-        }
+//        if (!vendorDetails.getPassword().equals(vendor.getPassword())) {
+//            vendor.setPassword(bCryptPasswordEncoder.encode(vendorDetails.getPassword()));
+//        }
 
         return vendorRepository.save(vendor);
     }
 
     // Delete a vendor account by ID
-    public void deleteVendor(Long id) {
-        Vendor vendor = vendorRepository.findById(id)
+    public void deleteVendor(Long vendorId) {
+        Vendor vendor = vendorRepository.findById(vendorId)
                 .orElseThrow(() -> new IllegalArgumentException("Vendor not found."));
         vendorRepository.delete(vendor);
     }

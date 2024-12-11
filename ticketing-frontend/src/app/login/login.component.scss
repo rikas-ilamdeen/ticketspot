@@ -1,0 +1,92 @@
+
+  
+  .login-container {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    min-height: 110vh; /* Full height of viewport */
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-form {
+    margin: auto;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    //width: 500px; /* Increased width for horizontal layout */
+  }
+  
+  h2 {
+    color: #6a11cb;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+  }
+  
+  /* Flexbox Layout for Labels and Inputs */
+  .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+
+  }
+  #err{
+    margin-left: 10px;
+  }
+  label {
+    font-size: 1rem;
+    color: #555;
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  input {
+    flex: 2;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+  }
+  
+  /* User Type (Radio Buttons) Layout */
+  .user-type {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  /* Submit Button */
+  .cta-button {
+    margin-top: 20px;
+    background: #2575fc;
+    color: white;
+    padding: 15px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .cta-button:hover {
+    background: #6a11cb;
+  }
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  

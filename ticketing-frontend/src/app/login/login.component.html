@@ -1,0 +1,57 @@
+<div class="login-container">
+    <div class="login-left">
+      <div class="login-form">
+        <h2>Login to Your Account</h2>
+  
+        <form (submit)="onSubmit()" #loginForm="ngForm">
+          <div class="form-group">
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              [(ngModel)]="loginData.email"
+              name="email"
+              (input)="validateEmail()"
+            />
+          </div>
+          <span class="error-message" *ngIf="emailError">{{ emailError }}</span>
+  
+          <div class="form-group">
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              [(ngModel)]="loginData.password"
+              name="password"
+              (input)="validatePassword()"
+            />
+          </div>
+          <span class="error-message" *ngIf="passwordError">{{ passwordError }}</span>
+  
+          <div class="form-group">
+            <label for="user-type">Select User Type</label>
+            <div class="user-type">
+              <input
+                type="radio"
+                id="vendor"
+                name="userType"
+                value="vendor"
+                [(ngModel)]="selectedRole"
+              />
+              Vendor
+              <input
+                type="radio"
+                id="customer"
+                name="userType"
+                value="customer"
+                [(ngModel)]="selectedRole"
+              />
+              Customer
+            </div>
+          </div>
+  
+          <button type="submit" class="cta-button" [disabled]="loginForm.invalid">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>

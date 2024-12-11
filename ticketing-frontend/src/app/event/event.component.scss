@@ -1,0 +1,144 @@
+/* Modern and Stylish Card */
+.stylish-card {
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 540px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 10px;
+    //overflow: hidden;
+  }
+  
+  .stylish-card:hover {
+    //transform: scale(1.1);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Card Image Styling */
+  .card-img {
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card-img:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Slide Panel Styles */
+  .slide-panel {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Start off-screen */
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    border-left: 3px solid #f9fafc;
+  }
+  
+  .slide-panel.open {
+    right: 0; /* Slide into view */
+  }
+  
+  /* Input Group and Buttons */
+  .input-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .input-group button {
+    width: 40px;
+    height: 40px;
+    background: #919b0d;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 50%;
+    border: none;
+  }
+  
+  .input-group input {
+    width: 60px;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+  }
+  
+  /* Slide Panel Footer */
+  .slide-footer {
+    text-align: center;
+    margin-top: auto; /* Push to the bottom */
+    //border-top: 1px solid #ddd;
+  }
+  
+  .slide-footer .btn {
+    width: 100%; /* Full-width Cancel button */
+    border-radius: 25px;
+    padding: 10px;
+    //background-color: #f8f9fa;
+    //border: 1px solid #007bff;
+    font-weight: bold;
+  }
+  
+  .slide-footer .btn:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Book Now Button Styling */
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  /* Other button styling */
+  .btn-outline-secondary {
+    border-color: #1e2327;
+    color: #495057;
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Styling for Slide Panel and Card */
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .card-text {
+    color: #555;
+  }
+  
+  /* Hover effect for card title */
+  .card-title:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  

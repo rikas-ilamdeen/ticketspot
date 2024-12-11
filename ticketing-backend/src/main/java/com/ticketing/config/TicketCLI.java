@@ -27,7 +27,6 @@ public class TicketCLI implements CommandLineRunner {
         if (existingConfig.isPresent()) {
             Ticket config = existingConfig.get();
             System.out.println("Current Ticket Configuration:");
-            System.out.println("Event Name: " + config.getEventName());
             System.out.println("Total Tickets: " + config.getTotalTickets());
             System.out.println("Ticket Release Rate: " + config.getTicketReleaseRate());
             System.out.println("Customer Retrieval Rate: " + config.getCustomerRetrievalRate());
@@ -44,9 +43,6 @@ public class TicketCLI implements CommandLineRunner {
         // Prompt for new configuration if existing configuration is not used
         System.out.println("Enter New Ticket Configuration:");
 
-        System.out.print("Event Name: ");
-        String eventName = scanner.nextLine();
-
         System.out.print("Total Tickets: ");
         int totalTickets = scanner.nextInt();
 
@@ -61,12 +57,14 @@ public class TicketCLI implements CommandLineRunner {
 
         // Save the new ticket configuration
         Ticket newConfig = new Ticket();
-        newConfig.setEventName(eventName);
+        newConfig.setEventName("Movie");
         newConfig.setTotalTickets(totalTickets);
         newConfig.setTicketReleaseRate(ticketReleaseRate);
         newConfig.setCustomerRetrievalRate(customerRetrievalRate);
         newConfig.setMaxTicketCapacity(maxTicketCapacity);
-
+        newConfig.setEventDate("2024-11-28");
+        newConfig.setEventTime("8:30 PM");
+        newConfig.setPrice(1500);
         ticketService.saveConfiguration(newConfig);
 
         System.out.println("Ticket configuration saved successfully.");

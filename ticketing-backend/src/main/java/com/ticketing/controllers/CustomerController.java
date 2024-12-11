@@ -1,17 +1,24 @@
 package com.ticketing.controllers;
 
+import com.ticketing.entities.BuyTicketData;
 import com.ticketing.entities.Customer;
 import com.ticketing.services.CustomerService;
 import com.ticketing.services.TicketPoolService;
 import com.ticketing.threads.CustomerThread;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/api/customer")
 public class CustomerController {
 
     @Autowired
@@ -27,7 +34,7 @@ public class CustomerController {
         }
         try {
             Customer savedCustomer = customerService.registerCustomer(customer);
-            return ResponseEntity.ok().body("Customer registered successfully! ID: " + savedCustomer.getId());
+            return new ResponseEntity<>(customer, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -36,17 +43,23 @@ public class CustomerController {
     @PostMapping("/login")
     public ResponseEntity<?> loginCustomer(@RequestBody Customer loginRequest) {
         try {
-            String message = customerService.loginCustomer(loginRequest.getEmail(), loginRequest.getPassword());
-            return ResponseEntity.ok().body(message);
+            HashMap<String,String> test = new HashMap<>();
+            Customer message = customerService.loginCustomer(loginRequest.getEmail(), loginRequest.getPassword());
+            if(message!=null){
+                return ResponseEntity.ok(message);
+            } else{
+                test.put("message","invalid email or password");
+                return ResponseEntity.ok().body(test);
+            }
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCustomer(@PathVariable Long id) {
+    public ResponseEntity<?> getCustomer(@PathVariable Long customerId) {
         try {
-            Customer customer = customerService.getCustomerById(id);
+            Customer customer = customerService.getCustomerById(customerId);
             return ResponseEntity.ok().body(customer);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -63,6 +76,18 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/")
+    public ResponseEntity<?> getAllCustomers() {
+        try {
+            // Fetch all customers using the customer service
+            List<Customer> customers = customerService.getAllCustomers();
+            return ResponseEntity.ok(customers); // Return the list of customers
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error retrieving customers: " + e.getMessage());
+        }
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
         try {
@@ -74,18 +99,25 @@ public class CustomerController {
     }
 
     // Endpoint to purchase tickets by customer
-    @PostMapping("/buy/{customerId}/{ticketPurchaseCount}")
-    public ResponseEntity<?> purchaseTicket(@PathVariable Long customerId, @PathVariable int ticketPurchaseCount) {
-        try {
-            // Create a new CustomerThread with the received data
-            CustomerThread customerThread = new CustomerThread(ticketPoolService, customerId, ticketPurchaseCount);
+    @PostMapping("/buy")
+    public ResponseEntity<?> purchaseTicket(@RequestBody BuyTicketData buyTicketData) {
+        BlockingQueue<String> result = new ArrayBlockingQueue<>(1);
+        HashMap<String,String> test = new HashMap<>();
+        // Create a new CustomerThread with the received data
+        BuyTicketData data = buyTicketData;
+        CustomerThread customerThread = new CustomerThread(ticketPoolService, data.getCustomerId(), data.getTicketPurchaseCount(), result::offer);
 
-            // Start the thread
-            new Thread(customerThread).start();
+        // Start the thread
+        new Thread(customerThread).start();
 
-            return ResponseEntity.ok("Customer thread started to purchase tickets.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to start the customer thread: " + e.getMessage());
+        try{
+            String mes = result.take();
+            test.put("message", mes);
+            return ResponseEntity.ok(test);
+        }catch (Exception e){
+            return ResponseEntity.ok(test.put("message", "error"));
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of());
         }
     }
+
 }

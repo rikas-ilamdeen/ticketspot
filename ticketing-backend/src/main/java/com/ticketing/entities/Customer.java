@@ -1,14 +1,8 @@
 package com.ticketing.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-
 
 @Entity
 @Table(name = "customers")
@@ -27,20 +21,24 @@ public class Customer {
     @NotEmpty(message = "Name cannot be empty")
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotEmpty(message = "Password cannot be empty")
     private String password;
+
+    @Column
+    private String phoneNumber;
 
     // Default constructor
     public Customer() {
     }
 
     // Parameterized constructor
-    public Customer(Long id, String email, String name, String password) {
+    public Customer(Long id, String name, String email, String password, String phoneNumber) {
         this.id = id;
-        this.email = email;
         this.name = name;
+        this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     // Getters and Setters
@@ -76,6 +74,14 @@ public class Customer {
         this.password = password;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     // toString() Method
     @Override
     public String toString() {
@@ -84,6 +90,7 @@ public class Customer {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

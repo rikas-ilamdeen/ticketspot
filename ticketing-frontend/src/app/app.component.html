@@ -1,0 +1,19 @@
+<nav class="navbar">
+    <div class="container">
+      <div class="logo-text">360Events</div>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="/event">Event</a></li>
+      </ul>
+      <p class="text-white font-weight-bold"><span class="user-name">{{isNameAvailable()}}</span></p>
+      <div class="auth-buttons">
+        <a *ngIf="!isEventPage() || !isUserLoggedIn()"  class="login-btn" href="/login">Login</a>
+        <a *ngIf="!isEventPage() || !isUserLoggedIn()"  class="signup-btn" href="/signup">Sign Up</a>
+        <button *ngIf="isEventPage() && isUserLoggedIn()"  class="logout-btn" (click)="logout()" >Log out</button>
+      </div>
+    </div>
+  </nav>
+<router-outlet></router-outlet>

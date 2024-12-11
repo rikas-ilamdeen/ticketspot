@@ -1,0 +1,45 @@
+<a class="logout-btn">Logout</a>
+
+<div class="card mb-3 stylish-card">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img [src]="'https://via.placeholder.com/150'" class="card-img img-fluid" alt="Event Image">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ event.eventName || 'Event Title' }}</h5>
+        <p class="card-text">{{ event.price || 'Description not available' }}</p>
+        <p class="card-text">{{ event.totalTickets || 'Description not available' }}</p>
+        
+        <!-- Event Date and Time with Labels -->
+        <p class="card-text">
+          <strong>Date: </strong><small class="text-muted">{{ event.eventDate || 'Date not available' }}</small>
+        </p>
+        <p class="card-text">
+          <strong>Time: </strong><small class="text-muted">{{ event.eventTime || 'Time not available' }}</small>
+        </p>
+
+        <button id="bookNowId" class="btn btn-primary" (click)="toggleSlide()">Book Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide Panel -->
+<div class="slide-panel" [class.open]="isSlideOpen">
+  <div class="card card-body">
+    <h5 class="card-title">Select Number of Tickets</h5>
+    <div class="input-group">
+      <button class="btn btn-outline-secondary" (click)="decreaseCount()">-</button>
+      <input type="text" class="form-control text-center" [value]="ticketCount" readonly>
+      <button class="btn btn-outline-secondary" (click)="increaseCount()">+</button>
+    </div>
+    <div class="d-flex justify-content-between mt-3">
+      <button class="btn btn-success" (click)="purchase()">Pay Now</button>
+    </div>
+    <!-- Cancel button at the bottom -->
+    <div class="slide-footer d-flex justify-content-end mt-3">
+      <button class="btn btn-dark" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</div>
