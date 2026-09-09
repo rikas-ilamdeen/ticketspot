@@ -1,11 +1,31 @@
 <main class="auth-page signup-page">
-    <div class="sign-up-form auth-form" aria-labelledby="signup-title">
-      <div class="form-heading"><span class="form-icon"><i class="bi bi-person-plus"></i></span><div><p class="eyebrow">Start exploring</p><h2 id="signup-title">Create your account</h2></div></div>
-      <p class="signup-tagline">Join the adventure community and make your next outing count.</p>
+  <section class="signup-shell" aria-labelledby="signup-title">
+    <aside class="signup-aside">
+      <span class="brand-mark"><i class="bi bi-compass"></i></span>
+      <p class="eyebrow">Start exploring</p>
+      <h1>Your next story<br><em>starts here.</em></h1>
+      <p class="aside-copy">Create one account for trail runs, camps, and the people you meet along the way.</p>
+      <div class="aside-points">
+        <span><i class="bi bi-calendar2-check"></i> Save your event plans</span>
+        <span><i class="bi bi-ticket-perforated"></i> Reserve spots faster</span>
+        <span><i class="bi bi-shield-check"></i> One secure TicketSpot account</span>
+      </div>
+      <p class="aside-footer">Find your route. Bring your people.</p>
+    </aside>
+
+    <div class="sign-up-form auth-form">
+      <div class="form-heading">
+        <span class="form-icon"><i class="bi bi-person-plus"></i></span>
+        <div><p class="eyebrow">Create account</p><h2 id="signup-title">Join TicketSpot</h2></div>
+      </div>
+      <p class="signup-tagline">A few details and you are ready to discover what is next.</p>
 
       <form (submit)="onSubmit()" #signupForm="ngForm" novalidate>
-        <div class="form-row">
-          <div class="form-group">
+        <div class="form-section">
+          <p class="section-label">Personal details</p>
+          <div class="form-row">
+            <div class="form-group">
+            <label for="name">Full name</label>
             <input
               id="name"
               type="text"
@@ -16,9 +36,10 @@
               (input)="validateName()"
             />
             <span class="error-message" *ngIf="nameError">{{ nameError }}</span>
-          </div>
+            </div>
   
-          <div class="form-group">
+            <div class="form-group">
+            <label for="email">Email address</label>
             <input
               id="email"
               type="email"
@@ -29,24 +50,33 @@
               (input)="validateEmail()"
             />
             <span class="error-message" *ngIf="emailError">{{ emailError }}</span>
+            </div>
           </div>
         </div>
   
-        <div class="form-row">
-          <div class="form-group">
-            <input
-              id="password"
-              type="password"
-              placeholder="At least 6 characters"
-              [(ngModel)]="signup.password"
-              name="password"
-              required minlength="6"
-              (input)="validatePassword()"
-            />
+        <div class="form-section">
+          <p class="section-label">Login details</p>
+          <div class="form-row">
+            <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-input">
+              <input
+                id="password"
+                [type]="passwordVisible ? 'text' : 'password'"
+                placeholder="At least 6 characters"
+                [(ngModel)]="signup.password"
+                name="password"
+                required minlength="6"
+                (input)="validatePassword()"
+              />
+              <button type="button" class="password-toggle" [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'" (click)="passwordVisible = !passwordVisible"><i class="bi" [class.bi-eye-slash]="passwordVisible" [class.bi-eye]="!passwordVisible"></i></button>
+            </div>
+            <small class="field-hint">Use at least 6 characters.</small>
             <span class="error-message" *ngIf="passwordError">{{ passwordError }}</span>
-          </div>
+            </div>
   
-          <div class="form-group">
+            <div class="form-group">
+            <label for="phone">Phone number</label>
             <input
               id="phone"
               type="tel"
@@ -57,18 +87,21 @@
               (input)="validatePhoneNumber()"
             />
             <span class="error-message" *ngIf="phoneError">{{ phoneError }}</span>
+            </div>
           </div>
         </div>
   
-        <div class="form-group">
-          <label for="user-type">Select User Type</label>
+        <fieldset class="role-section">
+          <legend>I am joining as</legend>
           <div class="user-type">
-            <label class="role-option" [class.selected]="selectedRole === 'customer'" for="customer"><input type="radio" id="customer" name="userType" value="customer" [(ngModel)]="selectedRole" /> <i class="bi bi-person"></i><span>Customer</span></label>
-            <label class="role-option" [class.selected]="selectedRole === 'vendor'" for="vendor"><input type="radio" id="vendor" name="userType" value="vendor" [(ngModel)]="selectedRole" /> <i class="bi bi-shop"></i><span>Vendor</span></label>
+            <label class="role-option" [class.selected]="selectedRole === 'customer'" for="customer"><input type="radio" id="customer" name="userType" value="customer" [(ngModel)]="selectedRole" /><span class="role-icon"><i class="bi bi-person"></i></span><span class="role-copy"><strong>Customer</strong><small>Find and reserve events</small></span><i class="bi bi-check-circle-fill role-check"></i></label>
+            <label class="role-option" [class.selected]="selectedRole === 'vendor'" for="vendor"><input type="radio" id="vendor" name="userType" value="vendor" [(ngModel)]="selectedRole" /><span class="role-icon"><i class="bi bi-shop"></i></span><span class="role-copy"><strong>Vendor</strong><small>Manage event tickets</small></span><i class="bi bi-check-circle-fill role-check"></i></label>
           </div>
-        </div>
-  
-        <button type="submit" class="cta-button" [disabled]="signupForm.invalid"><span>Create account</span><i class="bi bi-arrow-up-right"></i></button>
+        </fieldset>
+        <div class="status success" *ngIf="signupSuccess" role="status"><i class="bi bi-check-circle-fill"></i>{{ signupSuccess }}</div>
+        <div class="status error" *ngIf="signupError" role="alert"><i class="bi bi-exclamation-circle-fill"></i>{{ signupError }}</div>
+        <button type="submit" class="cta-button" [disabled]="signupForm.invalid"><span>Create my account</span><i class="bi bi-arrow-up-right"></i></button>
       </form>
     </div>
+  </section>
 </main>

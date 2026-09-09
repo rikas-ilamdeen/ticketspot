@@ -562,12 +562,12 @@
 
 .availability {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 22px;
-  color: #55675c;
-  font-size: 0.75rem;
-  font-weight: 700;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 26px;
+  padding: 16px 18px;
+  border-left: 5px solid #64b82d;
+  background: #f3f8df;
 }
 
 .availability-dot {
@@ -577,6 +577,9 @@
   background: #64b82d;
   box-shadow: 0 0 0 3px rgba(100, 184, 45, 0.25);
 }
+
+.availability-copy { display: flex; flex-direction: column; gap: 2px; color: #55675c; font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+.availability-copy strong { color: var(--forest); font: 700 clamp(3.3rem, 7vw, 5.2rem) / .85 'Space Grotesk', sans-serif; letter-spacing: -0.08em; }
 
 .booking-card h2 {
   margin-bottom: 24px;

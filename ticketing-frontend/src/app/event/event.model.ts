@@ -102,7 +102,7 @@ export const ADVENTURE_EVENTS: AdventureEvent[] = [
     statusLabel: 'Past Event',
     isPast: true,
     bookingEnabled: false,
-    image: 'assets/walk-to-riverstone/crosswinds.jpg',
+    image: 'assets/walk-to-riverstone/crosswinds-rikas-third-place.jpg',
     gallery: [
       'assets/walk-to-riverstone/crosswinds3.jpg',
       'assets/walk-to-riverstone/crosswinds4.jpg'

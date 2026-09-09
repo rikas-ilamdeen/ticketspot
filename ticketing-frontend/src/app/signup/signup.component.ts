@@ -26,6 +26,9 @@ export class SignUpComponent {
   emailError = '';
   passwordError = '';
   phoneError = '';
+  signupSuccess = '';
+  signupError = '';
+  passwordVisible = false;
 
   constructor(
     private customerService: CustomerService,
@@ -83,6 +86,8 @@ export class SignUpComponent {
   }
 
   onSubmit() {
+    this.signupSuccess = '';
+    this.signupError = '';
     // Perform all validations before proceeding
     const isNameValid = this.validateName();
     const isEmailValid = this.validateEmail();
@@ -97,22 +102,22 @@ export class SignUpComponent {
       this.customerService.createCustomer(this.signup).subscribe({
         next: (response) => {
           console.log('Customer sign-up successful', response);
-          alert('Customer sign-up successful!');
+          this.signupSuccess = 'Customer account created successfully. You can log in now.';
         },
         error: (err) => {
           console.error('Error during customer sign-up', err);
-          alert('Customer sign-up failed. Please try again.');
+          this.signupError = 'Customer sign-up failed. Please check your details and try again.';
         },
       });
     } else if (this.selectedRole === 'vendor') {
       this.vendorService.createVendor(this.signup).subscribe({
         next: (response) => {
           console.log('Vendor sign-up successful', response);
-          alert('Vendor sign-up successful!');
+          this.signupSuccess = 'Vendor account created successfully. You can log in now.';
         },
         error: (err) => {
           console.error('Error during vendor sign-up', err);
-          alert('Vendor sign-up failed. Please try again.');
+          this.signupError = 'Vendor sign-up failed. Please check your details and try again.';
         },
       });
     }
