@@ -98,7 +98,7 @@ public class VendorController {
 
     // Endpoint to add tickets by vendor
     @PostMapping("/addTickets")
-    public ResponseEntity<?> addTickets(@RequestBody AddTicketData addTicketData) {
+    public ResponseEntity<?> addTickets(@Valid @RequestBody AddTicketData addTicketData) {
         BlockingQueue<String> result = new ArrayBlockingQueue<>(1);
         HashMap<String,String> test = new HashMap<>();
 

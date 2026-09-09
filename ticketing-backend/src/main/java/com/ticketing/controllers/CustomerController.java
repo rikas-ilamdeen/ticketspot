@@ -100,7 +100,7 @@ public class CustomerController {
 
     // Endpoint to purchase tickets by customer
     @PostMapping("/buy")
-    public ResponseEntity<?> purchaseTicket(@RequestBody BuyTicketData buyTicketData) {
+    public ResponseEntity<?> purchaseTicket(@Valid @RequestBody BuyTicketData buyTicketData) {
         BlockingQueue<String> result = new ArrayBlockingQueue<>(1);
         HashMap<String,String> test = new HashMap<>();
         // Create a new CustomerThread with the received data

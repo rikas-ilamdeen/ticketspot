@@ -36,11 +36,18 @@ public class TicketPoolService {
     public String addTickets(Long vendorId, int numberOfTickets) {
         lock.lock();
         try {
+            if (numberOfTickets <= 0) {
+                return "Ticket quantity must be greater than zero.";
+            }
+
             List<Ticket> ticketList = ticketRepository.findAll();
             Ticket ticket = ticketList.isEmpty() ? null : ticketList.get(0);
 
             String error;
-            if(numberOfTickets > ticket.getTicketReleaseRate()){
+            if (ticket == null) {
+                error = "Ticket configuration is not available.";
+            }
+            else if(numberOfTickets > ticket.getTicketReleaseRate()){
                 error = "You can't add more than "+ticket.getTicketReleaseRate()+" tickets.";
                 System.out.println(error);
             }
@@ -75,15 +82,22 @@ public class TicketPoolService {
     public String purchaseTicket(Long customerId, int ticketPurchaseCount) {
         lock.lock();
         try {
+            if (ticketPurchaseCount <= 0) {
+                return "Ticket quantity must be greater than zero.";
+            }
+
             List<Ticket> ticketList = ticketRepository.findAll();
             Ticket ticket = ticketList.isEmpty() ? null : ticketList.get(0);
 
             String error;
-            if(ticketPurchaseCount > ticket.getCustomerRetrievalRate()){
+            if (ticket == null) {
+                error = "Ticket configuration is not available.";
+            }
+            else if(ticketPurchaseCount > ticket.getCustomerRetrievalRate()){
                 error = "You can't get more than "+ticket.getCustomerRetrievalRate()+" tickets.";
                 System.out.println(error);
             }
-            else if (ticket != null && (ticket.getTotalTickets() > ticketPurchaseCount)) {
+            else if (ticketPurchaseCount <= ticket.getTotalTickets()) {
                 ticket.setTotalTickets(ticket.getTotalTickets()-ticketPurchaseCount);
                 //ticket.setAvailable(false);
                 ticketRepository.save(ticket);
