@@ -29,6 +29,6 @@ export class AppComponent {
    // Method to log out
   logout() {
     sessionStorage.clear(); // Clear the session storage
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 }

@@ -1,20 +1,21 @@
 <nav class="navbar">
   <div class="nav-inner">
-    <a class="brand" routerLink="/" aria-label="TicketSpot home">
-      <span class="brand-mark">T</span>
-      <span>Ticket<span>Spot</span></span>
+    <a class="brand" routerLink="/" aria-label="TicketSpot Adventures">
+      <span class="brand-mark"><i class="bi bi-compass"></i></span>
+      <span>TicketSpot <span>Adventures</span></span>
     </a>
 
     <div class="nav-links">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Discover</a>
-      <a href="#destinations">Destinations</a>
-      <a href="#how-it-works">How it works</a>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All Events</a>
+      <a routerLink="/event" routerLinkActive="active">Forest Rail Run 2024</a>
+      <a href="#upcoming">Upcoming 2024</a>
+      <a href="#past-events">Past Events</a>
     </div>
 
     <div class="nav-actions">
       <span class="welcome" *ngIf="isUserLoggedIn()">{{ isNameAvailable() }}</span>
       <a class="text-link" routerLink="/login" *ngIf="!isUserLoggedIn()">Log in</a>
-      <a class="nav-cta" routerLink="/signup" *ngIf="!isUserLoggedIn()">Join TicketSpot</a>
+      <a class="nav-cta" routerLink="/signup" *ngIf="!isUserLoggedIn()">Join Adventures</a>
       <button class="icon-button" type="button" aria-label="Log out" title="Log out" *ngIf="isUserLoggedIn()" (click)="logout()">
         <i class="bi bi-box-arrow-right"></i>
       </button>

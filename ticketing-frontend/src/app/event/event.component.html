@@ -1,11 +1,418 @@
 <main class="event-page">
-  <div class="event-breadcrumb"><a routerLink="/">Discover</a><i class="bi bi-chevron-right"></i><span>Featured adventure</span></div>
+  <div class="event-breadcrumb">
+    <a routerLink="/"><i class="bi bi-arrow-left"></i> Back to Discover</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>Sri Lankan Hill Country</span>
+    <i class="bi bi-chevron-right"></i>
+    <span class="active">Forest Rail Run 2024 (FRR'24)</span>
+  </div>
+
+  <!-- Hero Section -->
   <section class="event-hero">
-    <div class="event-poster"><img src="assets/frr/frr6.jpg" alt="Forest Rail Run 2024 (FRR’24) poster"><span class="poster-label">CROSSWINDS ADVENTURES</span></div>
-    <div class="event-overview"><p class="event-kicker">Trail running <span>·</span> Ohiya, Sri Lanka</p><h1>{{ event.eventName }}</h1><p class="event-tagline">Run above the clouds.</p><p class="event-description">A highland trail experience through Ella's misty ridgelines, tea country, and big open skies. Come for the finish line. Stay for the view.</p><div class="event-meta"><div><i class="bi bi-calendar3"></i><span><small>Date</small>Sat, 19 Sep 2026</span></div><div><i class="bi bi-clock"></i><span><small>Flag off</small>6:00 AM (+0530)</span></div><div><i class="bi bi-geo-alt"></i><span><small>Venue</small>Ella Walauwwa, Mawela</span></div></div><div class="organizer"><span class="organizer-avatar">C</span><span>Organized by <strong>Crosswinds Adventures</strong></span><span class="verified"><i class="bi bi-patch-check-fill"></i> Verified</span></div></div>
+    <div class="event-poster">
+      <img [src]="activeGalleryImage" alt="Forest Rail Run 2024 (FRR'24) Poster">
+      <span class="poster-label">CROSSWINDS ADVENTURES</span>
+      <span class="featured-tag"><i class="bi bi-star-fill"></i> MAIN FEATURED EVENT</span>
+    </div>
+
+    <div class="event-overview">
+      <p class="event-kicker">
+        <span>Competition Hike / Trail Running / Adventure</span>
+        <span>·</span>
+        <span>Sri Lankan Hill Country</span>
+      </p>
+
+      <h1>{{ event.eventName || "Forest Rail Run 2024 (FRR'24)" }}</h1>
+      <p class="event-tagline">30 km Through Railway Tracks, Cloud Forests & Devil's Staircase</p>
+
+      <p class="event-description">
+        A 30 km adventure combining railway tracks, forest trails, rugged roads, stream crossings, wetlands, steep climbs and descents, finishing around Devil's Staircase.
+      </p>
+
+      <div class="event-meta">
+        <div>
+          <i class="bi bi-calendar3"></i>
+          <span>
+            <small>Dates</small>
+            {{ event.eventDate || "27–28 April 2024" }}
+          </span>
+        </div>
+        <div>
+          <i class="bi bi-clock"></i>
+          <span>
+            <small>Start / Flag-off</small>
+            {{ event.eventTime || "27 April 2024 at 7:00 AM" }}
+          </span>
+        </div>
+        <div>
+          <i class="bi bi-speedometer2"></i>
+          <span>
+            <small>Distance</small>
+            30 km Trail Challenge
+          </span>
+        </div>
+        <div>
+          <i class="bi bi-geo-alt"></i>
+          <span>
+            <small>Location</small>
+            Forest Rail Run Route, Hill Country
+          </span>
+        </div>
+      </div>
+
+      <div class="organizer">
+        <span class="organizer-avatar">C</span>
+        <span>Organized by <strong>Crosswinds Adventures</strong></span>
+        <span class="verified"><i class="bi bi-patch-check-fill"></i> Verified Organizer</span>
+      </div>
+    </div>
   </section>
+
+  <!-- Content & Booking Layout -->
   <section class="booking-layout">
-    <div class="event-info"><div class="info-tabs"><button class="active" type="button">About this adventure</button><button type="button">Good to know</button></div><h2>One route. <em>Endless views.</em></h2><p>Set off from Ella Walauwwa and follow a course shaped by the island's most cinematic landscapes. Expect mountain air, warm local support, and a finish you'll talk about long after the legs recover.</p><div class="experience-points"><div><i class="bi bi-tree"></i><span><strong>Highland terrain</strong><small>Tea trails, forest paths, and cloud country.</small></span></div><div><i class="bi bi-people"></i><span><strong>Open to everyone</strong><small>Local and international participants welcome.</small></span></div><div><i class="bi bi-heart-pulse"></i><span><strong>Run your pace</strong><small>Come for the challenge or the atmosphere.</small></span></div></div></div>
-    <aside class="booking-card"><div class="availability"><span class="availability-dot"></span><span>{{ event.totalTickets || 0 }} spots currently available</span></div><h2>Choose your<br><em>entry.</em></h2><div class="ticket-row"><div><strong>General entry</strong><small>Race access + event bib</small></div><span class="ticket-price">LKR {{ event.price | number:'1.0-0' }}</span></div><div class="quantity-row"><span>How many?</span><div class="quantity-control"><button type="button" aria-label="Decrease tickets" (click)="decreaseCount()">−</button><strong>{{ ticketCount }}</strong><button type="button" aria-label="Increase tickets" (click)="increaseCount()">+</button></div></div><div class="total-row"><span>Total</span><strong>LKR {{ (event.price || 0) * ticketCount | number:'1.0-0' }}</strong></div><button class="book-button" type="button" (click)="purchase()">Reserve my spot <i class="bi bi-arrow-up-right"></i></button><p class="secure-note"><i class="bi bi-shield-check"></i> Your spot is held while the booking is confirmed.</p></aside>
+    <!-- Left Column: Structured Sections & Tabs -->
+    <div class="event-info">
+      <!-- Section Navigation Tabs -->
+      <nav class="info-tabs" aria-label="Event sections">
+        <button
+          type="button"
+          [class.active]="activeTab === 'overview'"
+          (click)="setTab('overview')"
+        >
+          <i class="bi bi-map"></i> Overview & Route
+        </button>
+        <button
+          type="button"
+          [class.active]="activeTab === 'entries'"
+          (click)="setTab('entries')"
+        >
+          <i class="bi bi-people"></i> Entry Types
+        </button>
+        <button
+          type="button"
+          [class.active]="activeTab === 'awards'"
+          (click)="setTab('awards')"
+        >
+          <i class="bi bi-trophy"></i> Awards
+        </button>
+        <button
+          type="button"
+          [class.active]="activeTab === 'features'"
+          (click)="setTab('features')"
+        >
+          <i class="bi bi-shield-check"></i> Event Features
+        </button>
+        <button
+          type="button"
+          [class.active]="activeTab === 'gallery'"
+          (click)="setTab('gallery')"
+        >
+          <i class="bi bi-images"></i> Photo Gallery
+        </button>
+      </nav>
+
+      <!-- Tab 1: Overview & Route Highlights -->
+      <div class="tab-pane" *ngIf="activeTab === 'overview'">
+        <h2>Route Highlights & <em>Terrain.</em></h2>
+        <p class="section-lead">
+          The 30 km course navigates through the dramatic high-elevation topography of the Central Highlands, blending historical railway segments with remote wilderness trails.
+        </p>
+
+        <div class="route-grid">
+          <div class="route-card">
+            <div class="route-icon"><i class="bi bi-train-front"></i></div>
+            <div class="route-body">
+              <strong>7 km Rail Run</strong>
+              <p>Following high mountain railway corridors with dramatic valley views.</p>
+            </div>
+          </div>
+
+          <div class="route-card">
+            <div class="route-icon"><i class="bi bi-tree"></i></div>
+            <div class="route-body">
+              <strong>15 km Forest Trail</strong>
+              <p>Winding deep into native cloud forests, wetlands, and ridge paths.</p>
+            </div>
+          </div>
+
+          <div class="route-card">
+            <div class="route-icon"><i class="bi bi-triangle"></i></div>
+            <div class="route-body">
+              <strong>Udaweriya Peak</strong>
+              <p>Challenging ascents reaching panoramic highland tea estate peaks.</p>
+            </div>
+          </div>
+
+          <div class="route-card">
+            <div class="route-icon"><i class="bi bi-compass"></i></div>
+            <div class="route-body">
+              <strong>Horton Plains Road</strong>
+              <p>Traversing rugged high plateau stretches with mist and brisk winds.</p>
+            </div>
+          </div>
+
+          <div class="route-card highlight-route">
+            <div class="route-icon"><i class="bi bi-signpost-2"></i></div>
+            <div class="route-body">
+              <strong>Devil's Staircase</strong>
+              <p>The iconic final descent featuring dramatic hairpin curves and stone roads.</p>
+            </div>
+          </div>
+
+          <div class="route-card">
+            <div class="route-icon"><i class="bi bi-water"></i></div>
+            <div class="route-body">
+              <strong>Stream Crossings & Terrain</strong>
+              <p>Natural water crossings, rocky paths, steep climbs, and mountain descents.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Entry Types -->
+      <div class="tab-pane" *ngIf="activeTab === 'entries'">
+        <h2>Registration & <em>Entry Types.</em></h2>
+        <p class="section-lead">
+          Participants can compete individually or join forces as a multi-runner team across four distinct categories:
+        </p>
+
+        <div class="entries-grid">
+          <div class="entry-card">
+            <div class="entry-header">
+              <span class="entry-badge">Solo</span>
+              <i class="bi bi-person"></i>
+            </div>
+            <h3>Individual Male</h3>
+            <p>Solo competitive entry for male trail runners across the full 30 km course.</p>
+          </div>
+
+          <div class="entry-card">
+            <div class="entry-header">
+              <span class="entry-badge">Solo</span>
+              <i class="bi bi-person"></i>
+            </div>
+            <h3>Individual Female</h3>
+            <p>Solo competitive entry for female trail runners across the full 30 km course.</p>
+          </div>
+
+          <div class="entry-card">
+            <div class="entry-header">
+              <span class="entry-badge duo">Team</span>
+              <i class="bi bi-people"></i>
+            </div>
+            <h3>Duo — 2 Participants</h3>
+            <p>Team entry for 2 runners who navigate, motivate, and cross checkpoints together.</p>
+          </div>
+
+          <div class="entry-card">
+            <div class="entry-header">
+              <span class="entry-badge triplet">Team</span>
+              <i class="bi bi-people-fill"></i>
+            </div>
+            <h3>Triplet — 3 Participants</h3>
+            <p>Team entry for 3 runners sharing the mountain adventure and team ranking.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Awards -->
+      <div class="tab-pane" *ngIf="activeTab === 'awards'">
+        <h2>Prizes & <em>Podium Awards.</em></h2>
+        <p class="section-lead">
+          Official podium honors and recognition presented across competitive categories:
+        </p>
+
+        <div class="awards-grid">
+          <div class="award-card">
+            <div class="award-trophy gold"><i class="bi bi-trophy-fill"></i></div>
+            <div class="award-info">
+              <h3>Extreme Team</h3>
+              <strong>1st, 2nd and 3rd Place</strong>
+              <p>Honoring the fastest collective team finishes across the 30 km trail.</p>
+            </div>
+          </div>
+
+          <div class="award-card">
+            <div class="award-trophy silver"><i class="bi bi-trophy-fill"></i></div>
+            <div class="award-info">
+              <h3>Extreme Individual</h3>
+              <strong>1st, 2nd and 3rd Place</strong>
+              <p>Top solo performers battling the rugged course elements.</p>
+            </div>
+          </div>
+
+          <div class="award-card">
+            <div class="award-trophy bronze"><i class="bi bi-trophy-fill"></i></div>
+            <div class="award-info">
+              <h3>Children & Family</h3>
+              <strong>1st, 2nd and 3rd Place</strong>
+              <p>Celebrating family and youthful endurance on the trail.</p>
+            </div>
+          </div>
+
+          <div class="award-card">
+            <div class="award-trophy special"><i class="bi bi-award-fill"></i></div>
+            <div class="award-info">
+              <h3>Special Awards</h3>
+              <strong>Course & Spirit Honors</strong>
+              <p>Special category distinctions, spirit awards, and endurance recognition.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Features & Amenities -->
+      <div class="tab-pane" *ngIf="activeTab === 'features'">
+        <h2>Comprehensive <em>Event Support.</em></h2>
+        <p class="section-lead">
+          Full logistical, medical, and hospitality infrastructure provided by Crosswinds Adventures:
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <i class="bi bi-geo-fill"></i>
+            <div>
+              <strong>GPS / Wikiloc Route Tracking</strong>
+              <small>Pre-loaded GPX track & live navigation aid</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-flag-fill"></i>
+            <div>
+              <strong>Marked Trail</strong>
+              <small>High-visibility tape & markers throughout</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-person-check-fill"></i>
+            <div>
+              <strong>Event Marshals</strong>
+              <small>Stationed checkpoints along all key turns</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-heart-pulse-fill"></i>
+            <div>
+              <strong>First-Aid & Medical Support</strong>
+              <small>Certified trail medics and evacuation readiness</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-cup-hot-fill"></i>
+            <div>
+              <strong>Meals & Hydration</strong>
+              <small>Aid stations, trail snacks, and hearty post-run meals</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-tent-fill"></i>
+            <div>
+              <strong>Camping / Tent Facilities</strong>
+              <small>Designated campsite area for runners</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-bus-front-fill"></i>
+            <div>
+              <strong>Colombo Return Transportation</strong>
+              <small>Group transport from Colombo to event and back</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-tag-fill"></i>
+            <div>
+              <strong>Official Event T-Shirt</strong>
+              <small>Commemorative performance runner tee</small>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <i class="bi bi-building"></i>
+            <div>
+              <strong>Limited Hotel Accommodation</strong>
+              <small>Available on first-come reservation basis</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Gallery -->
+      <div class="tab-pane" *ngIf="activeTab === 'gallery'">
+        <h2>Event <em>Gallery.</em></h2>
+        <p class="section-lead">
+          Highlights from the Forest Rail Run trail, Ohiya railway tracks, and Devil's Staircase scenery:
+        </p>
+
+        <div class="event-gallery-showcase">
+          <div class="featured-gallery-view">
+            <img [src]="activeGalleryImage" alt="Forest Rail Run gallery photo">
+          </div>
+          <div class="gallery-thumbs-row">
+            <button
+              *ngFor="let img of frrDetails.gallery"
+              type="button"
+              class="thumb-box"
+              [class.active]="activeGalleryImage === img"
+              (click)="setGalleryImage(img)"
+            >
+              <img [src]="img" alt="FRR photo thumbnail">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Prominent Booking Card -->
+    <aside class="booking-card">
+      <div class="availability">
+        <span class="availability-dot"></span>
+        <span><strong>{{ event.totalTickets || 0 }}</strong> spots currently available</span>
+      </div>
+
+      <h2>Reserve your<br><em>Race Bib.</em></h2>
+
+      <div class="ticket-row">
+        <div>
+          <strong>Forest Rail Run 2024 Entry</strong>
+          <small>30 km trail bib + meals + amenities</small>
+        </div>
+        <span class="ticket-price">LKR {{ event.price | number:'1.0-0' }}</span>
+      </div>
+
+      <div class="quantity-row">
+        <span>Number of Entries</span>
+        <div class="quantity-control">
+          <button type="button" aria-label="Decrease tickets" (click)="decreaseCount()">−</button>
+          <strong>{{ ticketCount }}</strong>
+          <button type="button" aria-label="Increase tickets" (click)="increaseCount()">+</button>
+        </div>
+      </div>
+
+      <div class="total-row">
+        <span>Total Payable</span>
+        <strong>LKR {{ (event.price || 0) * ticketCount | number:'1.0-0' }}</strong>
+      </div>
+
+      <button class="book-button" type="button" (click)="purchase()">
+        Confirm & Reserve Spots <i class="bi bi-arrow-up-right"></i>
+      </button>
+
+      <div class="perks-list">
+        <div><i class="bi bi-shield-check"></i> Live real-time booking confirmation</div>
+        <div><i class="bi bi-lightning-charge"></i> Instant inventory reservation</div>
+        <div><i class="bi bi-geo-alt"></i> Official Crosswinds Adventures event</div>
+      </div>
+
+      <p class="secure-note">
+        <i class="bi bi-lock-fill"></i> Secure ticket reservation processed through TicketSpot.
+      </p>
+    </aside>
   </section>
 </main>

@@ -19,10 +19,10 @@ export class DashboardComponent implements OnInit, OnDestroy{
   ticketCount: number = 1; // Track the number of tickets
 
   event: Event = {
-    eventName: '',
-    eventDate: '',
-    eventTime: '',
-    price: 0.0,
+    eventName: "Forest Rail Run 2024 (FRR'24)",
+    eventDate: '27–28 April 2024',
+    eventTime: '7:00 AM',
+    price: 4500,
     totalTickets: 0
   }; // Initialize the event with default values
   private subscription: Subscription | null = null;

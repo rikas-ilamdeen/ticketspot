@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { AdventureEvent, ADVENTURE_EVENTS } from '../event/event.model';
 
 @Component({
   selector: 'app-home',
@@ -10,41 +11,75 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  activeCategory = 'All adventures';
+  activeCategory = 'All Adventures';
 
   categories = [
-    { label: 'All adventures', icon: 'bi-compass' },
-    { label: 'Trail running', icon: 'bi-lightning-charge' },
-    { label: 'Hiking', icon: 'bi-signpost-split' },
-    { label: 'Water & coast', icon: 'bi-water' },
-    { label: 'Camping', icon: 'bi-tent' }
+    { label: 'All Adventures', icon: 'bi-compass' },
+    { label: 'Trail Running', icon: 'bi-lightning-charge' },
+    { label: 'Hiking / Trekking', icon: 'bi-signpost-split' },
+    { label: 'Surfing / Water Sports', icon: 'bi-water' },
+    { label: 'Beach Camping', icon: 'bi-tent' }
   ];
 
-  events = [
-    { title: 'HIGHLANDERS Ella Run 2026', location: 'Ella, Uva Province', date: '19 Sep 2026', type: 'Trail running', image: 'assets/ella-run.jpg', accent: 'lime' },
-    { title: 'Knuckles Mist Trail', location: 'Kandy, Central Province', date: '03 Oct 2026', type: 'Hiking', image: 'assets/mvv.jpg', accent: 'clay' },
-    { title: 'Galle Coastline Paddle', location: 'Galle, Southern Province', date: '11 Oct 2026', type: 'Water & coast', image: 'assets/avatar.jpeg', accent: 'ocean' }
-  ];
+  allEvents: AdventureEvent[] = ADVENTURE_EVENTS;
 
-  destinations = [
-    { name: 'Ella', note: 'Cloud forests & trails', image: 'assets/ella-run.jpg' },
-    { name: 'Kandy', note: 'Mountain escapes', image: 'assets/mvv.jpg' },
-    { name: 'Galle', note: 'Ocean-side adventures', image: 'assets/avatar.jpeg' }
-  ];
+  featuredEvent: AdventureEvent = ADVENTURE_EVENTS.find(e => e.id === 'frr-2024') || ADVENTURE_EVENTS[0];
+
+  selectedEvent: AdventureEvent | null = null;
+  activeGalleryImage: string | null = null;
 
   constructor(private router: Router) {}
-
-  startSignup() {
-    this.router.navigate(['/signup']);
-  }
 
   selectCategory(category: string) {
     this.activeCategory = category;
   }
 
-  filteredEvents() {
-    return this.activeCategory === 'All adventures'
-      ? this.events
-      : this.events.filter((event) => event.type === this.activeCategory);
+  isCategoryMatch(event: AdventureEvent): boolean {
+    if (this.activeCategory === 'All Adventures') return true;
+    if (this.activeCategory === 'Trail Running') {
+      return event.category.toLowerCase().includes('trail running');
+    }
+    if (this.activeCategory === 'Hiking / Trekking') {
+      return event.category.toLowerCase().includes('hiking') || event.category.toLowerCase().includes('trekking');
+    }
+    if (this.activeCategory === 'Surfing / Water Sports') {
+      return event.category.toLowerCase().includes('surfing') || event.category.toLowerCase().includes('water sports');
+    }
+    if (this.activeCategory === 'Beach Camping') {
+      return event.category.toLowerCase().includes('camping') || event.category.toLowerCase().includes('beach');
+    }
+    return true;
+  }
+
+  get upcomingEvents(): AdventureEvent[] {
+    return this.allEvents.filter(e => !e.isPast && this.isCategoryMatch(e));
+  }
+
+  get pastEvents(): AdventureEvent[] {
+    return this.allEvents.filter(e => e.isPast && this.isCategoryMatch(e));
+  }
+
+  openEventDetails(event: AdventureEvent, ev?: MouseEvent) {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+    this.selectedEvent = event;
+    this.activeGalleryImage = event.image;
+  }
+
+  closeEventDetails() {
+    this.selectedEvent = null;
+    this.activeGalleryImage = null;
+  }
+
+  setGalleryImage(img: string) {
+    this.activeGalleryImage = img;
+  }
+
+  navigateToBooking(event: AdventureEvent) {
+    if (event.bookingEnabled) {
+      this.router.navigate(['/event']);
+    }
   }
 }

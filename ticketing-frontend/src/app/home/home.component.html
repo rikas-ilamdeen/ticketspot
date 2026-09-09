@@ -1,45 +1,441 @@
 <main class="home-page">
+  <!-- Hero / Featured Event Section -->
   <section class="hero-wrap">
     <div class="hero-copy">
-      <p class="eyebrow"><span></span> Adventure starts here</p>
-      <h1>Find your next<br><em>way out.</em></h1>
-      <p class="hero-intro">Curated outdoor experiences across Sri Lanka for people who would rather be somewhere else.</p>
-      <div class="hero-actions">
-        <a class="primary-button" routerLink="/event">Explore the featured event <i class="bi bi-arrow-up-right"></i></a>
-        <a class="play-link" href="#how-it-works"><span><i class="bi bi-play-fill"></i></span> How TicketSpot works</a>
+      <p class="eyebrow">
+        <span></span> Sri Lankan Outdoor Adventures
+      </p>
+      <h1>Run the Wild.<br><em>Forest Rail Run.</em></h1>
+      <p class="hero-intro">
+        A 30 km competition hike and trail run through the misty Sri Lankan hill country — connecting historic railway tracks, forest trails, and the rugged slopes of Devil's Staircase.
+      </p>
+      
+      <div class="featured-badge-pill">
+        <span class="live-dot pulse"></span>
+        <span>Main Featured Event · 27–28 April 2024</span>
       </div>
-      <div class="hero-proof"><div class="proof-avatars"><span>AT</span><span>RS</span><span>MN</span></div><span>Join 2,400+ weekend explorers</span></div>
+
+      <div class="hero-actions">
+        <a class="primary-button" routerLink="/event">
+          Register & Book Now <i class="bi bi-arrow-up-right"></i>
+        </a>
+        <a class="secondary-button" routerLink="/event">
+          <i class="bi bi-info-circle"></i> Event Details
+        </a>
+      </div>
+
+      <div class="hero-meta-strip">
+        <div>
+          <i class="bi bi-geo-alt"></i>
+          <div>
+            <small>Location</small>
+            <strong>Sri Lankan Hill Country</strong>
+          </div>
+        </div>
+        <div>
+          <i class="bi bi-flag"></i>
+          <div>
+            <small>Distance</small>
+            <strong>30 km Trail Run</strong>
+          </div>
+        </div>
+        <div>
+          <i class="bi bi-clock"></i>
+          <div>
+            <small>Flag-off</small>
+            <strong>27 Apr 2024 · 7:00 AM</strong>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="hero-image">
-      <img src="assets/ella-run.jpg" alt="HIGHLANDERS Ella Run 2026 event poster">
-      <div class="image-stamp"><span>FEATURED</span><strong>01</strong><small>/ 03</small></div>
-      <div class="floating-event-card"><span><i class="live-dot"></i>Next up in Ella</span><strong>19 <small>SEP</small></strong></div>
+      <img [src]="featuredEvent.image" alt="Forest Rail Run 2024 (FRR'24)">
+      <div class="image-stamp">
+        <span>ORGANIZED BY</span>
+        <strong>Crosswinds</strong>
+        <small>ADVENTURES</small>
+      </div>
+      <div class="floating-event-card">
+        <span><i class="live-dot"></i> Booking Active</span>
+        <strong>30 <small>KM</small></strong>
+        <p class="mb-0 text-muted">Devil's Staircase Finish</p>
+      </div>
     </div>
   </section>
 
+  <!-- Category Filter Bar -->
   <section class="category-strip" aria-label="Adventure categories">
-    <div class="section-label">Explore by mood</div>
+    <div class="section-label">Filter by Category</div>
     <div class="category-list">
-      <button *ngFor="let category of categories" type="button" [class.selected]="activeCategory === category.label" (click)="selectCategory(category.label)"><i class="bi" [ngClass]="category.icon"></i>{{ category.label }}</button>
+      <button
+        *ngFor="let category of categories"
+        type="button"
+        [class.selected]="activeCategory === category.label"
+        (click)="selectCategory(category.label)"
+      >
+        <i class="bi" [ngClass]="category.icon"></i>
+        {{ category.label }}
+      </button>
     </div>
   </section>
 
-  <section class="event-section" id="discover">
-    <div class="section-heading"><div><p class="eyebrow dark"><span></span> Handpicked for you</p><h2>Make a day<br><em>of it.</em></h2></div><a routerLink="/event" class="arrow-link">View all adventures <i class="bi bi-arrow-up-right"></i></a></div>
+  <!-- Upcoming & Future Events (2024) -->
+  <section class="event-section" id="upcoming">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow dark"><span></span> 2024 Calendar</p>
+        <h2>Upcoming & Future<br><em>Adventures.</em></h2>
+      </div>
+      <p class="section-subtitle">
+        Explore bookable competitions and future expeditions across Sri Lanka's peaks, tracks, and coasts.
+      </p>
+    </div>
+
     <div class="event-grid">
-      <a class="event-card" *ngFor="let event of filteredEvents()" routerLink="/event">
-        <div class="event-image"><img [src]="event.image" [alt]="event.title"><span class="event-type" [class]="event.accent">{{ event.type }}</span><button type="button" class="save-button" aria-label="Save event"><i class="bi bi-bookmark"></i></button></div>
-        <div class="event-card-body"><p class="event-date">{{ event.date }}</p><h3>{{ event.title }}</h3><p class="event-location"><i class="bi bi-geo-alt"></i>{{ event.location }}</p><div class="event-card-footer"><span>From <strong>LKR 4,500</strong></span><i class="bi bi-arrow-up-right"></i></div></div>
-      </a>
+      <div class="event-card" *ngFor="let event of upcomingEvents" [class.featured-card]="event.status === 'featured'">
+        <div class="event-image">
+          <img [src]="event.image" [alt]="event.title">
+          <span class="event-status-badge" [class.badge-featured]="event.status === 'featured'" [class.badge-upcoming]="event.status === 'upcoming'" [class.badge-future]="event.status === 'future'">
+            {{ event.statusLabel }}
+          </span>
+          <span class="event-cat-tag">{{ event.category }}</span>
+        </div>
+
+        <div class="event-card-body">
+          <div class="event-timing">
+            <i class="bi bi-calendar3"></i>
+            <span>{{ event.dates }}</span>
+            <span *ngIf="event.startTime" class="time-divider">·</span>
+            <span *ngIf="event.startTime">{{ event.startTime }}</span>
+          </div>
+
+          <h3>{{ event.title }}</h3>
+          
+          <p class="event-location">
+            <i class="bi bi-geo-alt-fill"></i> {{ event.location }}
+          </p>
+
+          <p class="event-desc">{{ event.description }}</p>
+
+          <!-- Display notes if available (e.g. Baththalangunduwa) -->
+          <ul class="display-notes" *ngIf="event.displayNotes">
+            <li *ngFor="let note of event.displayNotes">
+              <i class="bi bi-check2-circle"></i> {{ note }}
+            </li>
+          </ul>
+
+          <!-- Route highlights preview if available (e.g. Pekoe Trail) -->
+          <div class="highlights-preview" *ngIf="event.routeHighlights && event.status !== 'featured'">
+            <small>Highlights:</small>
+            <div class="tag-chips">
+              <span *ngFor="let h of event.routeHighlights.slice(0, 3)">{{ h }}</span>
+            </div>
+          </div>
+
+          <div class="event-card-footer">
+            <div class="booking-status">
+              <span *ngIf="event.bookingEnabled" class="status-open">
+                <i class="bi bi-check-circle-fill"></i> Booking Enabled
+              </span>
+              <span *ngIf="!event.bookingEnabled && event.status === 'future'" class="status-future">
+                <i class="bi bi-clock"></i> Date to be announced
+              </span>
+              <span *ngIf="!event.bookingEnabled && event.status === 'upcoming'" class="status-limited">
+                <i class="bi bi-info-circle"></i> Limited seats · Single event bookable
+              </span>
+            </div>
+
+            <div class="action-buttons">
+              <a *ngIf="event.bookingEnabled" routerLink="/event" class="card-btn btn-primary-action">
+                Book Event <i class="bi bi-arrow-up-right"></i>
+              </a>
+              <button
+                type="button"
+                class="card-btn btn-details-action"
+                (click)="openEventDetails(event, $event)"
+              >
+                Details & Highlights
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="destination-section" id="destinations">
-    <div class="section-heading compact"><div><p class="eyebrow dark"><span></span> Pick a direction</p><h2>Go beyond<br>the <em>usual.</em></h2></div><p class="section-note">From highland sunrises to saltwater afternoons, find a reason to take the scenic route.</p></div>
-    <div class="destination-grid"><a class="destination-card" *ngFor="let destination of destinations" routerLink="/event"><img [src]="destination.image" [alt]="destination.name"><div><span>{{ destination.note }}</span><h3>{{ destination.name }} <i class="bi bi-arrow-up-right"></i></h3></div></a></div>
+  <!-- Past Events Section (2023) -->
+  <section class="event-section past-section" id="past-events">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow dark"><span></span> 2023 Archive</p>
+        <h2>Past Adventure<br><em>Milestones.</em></h2>
+      </div>
+      <p class="section-subtitle">
+        Completed endurance runs, mountain climbs, and national sporting events in Sri Lanka.
+      </p>
+    </div>
+
+    <div class="event-grid">
+      <div class="event-card past-card" *ngFor="let event of pastEvents">
+        <div class="event-image">
+          <img [src]="event.image" [alt]="event.title">
+          <span class="event-status-badge badge-past">Past Event (2023)</span>
+          <span class="event-cat-tag">{{ event.category }}</span>
+        </div>
+
+        <div class="event-card-body">
+          <div class="event-timing">
+            <i class="bi bi-calendar-check"></i>
+            <span>{{ event.dates }}</span>
+            <span *ngIf="event.organizer" class="time-divider">·</span>
+            <span *ngIf="event.organizer">{{ event.organizer }}</span>
+          </div>
+
+          <h3>{{ event.title }}</h3>
+
+          <p class="event-location">
+            <i class="bi bi-geo-alt-fill"></i> {{ event.location }}
+            <span *ngIf="event.distance" class="dist-tag">({{ event.distance }})</span>
+          </p>
+
+          <!-- Achievement Badge for Riverston -->
+          <div class="achievement-banner" *ngIf="event.personalAchievement">
+            <i class="bi bi-trophy-fill"></i>
+            <div>
+              <small>Personal Achievement</small>
+              <strong>{{ event.personalAchievement }}</strong>
+            </div>
+          </div>
+
+          <p class="event-desc">{{ event.description }}</p>
+
+          <div class="event-card-footer">
+            <div class="booking-status">
+              <span class="status-disabled">
+                <i class="bi bi-slash-circle"></i> Booking Disabled (Past Event)
+              </span>
+            </div>
+
+            <button
+              type="button"
+              class="card-btn btn-details-action"
+              (click)="openEventDetails(event, $event)"
+            >
+              <i class="bi bi-images"></i> View Story & Gallery
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="how-section" id="how-it-works"><p class="eyebrow"><span></span> Your next story</p><h2>Three taps from<br><em>somewhere better.</em></h2><div class="steps"><div><b>01</b><i class="bi bi-compass"></i><h3>Choose your escape</h3><p>Browse real experiences by place, pace, and how far you want to wander.</p></div><div><b>02</b><i class="bi bi-ticket-perforated"></i><h3>Reserve your spot</h3><p>Pick your tickets and keep the adventure planning wonderfully simple.</p></div><div><b>03</b><i class="bi bi-sunrise"></i><h3>Show up curious</h3><p>Meet your crew, breathe in the view, and make the day count.</p></div></div></section>
+  <!-- Sri Lanka Outdoor Experience Highlights -->
+  <section class="experience-section" id="experiences">
+    <div class="section-heading compact">
+      <div>
+        <p class="eyebrow dark"><span></span> Explore Sri Lanka</p>
+        <h2>The Island's Great<br><em>Outdoors.</em></h2>
+      </div>
+      <p class="section-note">
+        From remote mountain ridgelines and misty tea estates to tropical waves and untouched beaches.
+      </p>
+    </div>
 
-  <footer class="home-footer"><a class="brand" routerLink="/"><span class="brand-mark">T</span><span>Ticket<span>Spot</span></span></a><span>Made for the beautifully restless.</span><span>© 2026 TicketSpot Sri Lanka</span></footer>
+    <div class="experience-grid">
+      <div class="exp-card">
+        <img src="assets/frr/frr1.jpg" alt="Railway and mountain trail">
+        <div class="exp-content">
+          <span>Central Highlands</span>
+          <h3>Forest Rail Runs</h3>
+          <p>Trekking across railway viaducts, cloud forests, and steep mountain passes.</p>
+        </div>
+      </div>
+      <div class="exp-card">
+        <img src="assets/hiking/hike.jpeg" alt="Tea valley and Pekoe trail">
+        <div class="exp-content">
+          <span>Tea Country</span>
+          <h3>The Pekoe Trail</h3>
+          <p>Traversing historic plantation routes, misty ravines, and high-altitude peaks.</p>
+        </div>
+      </div>
+      <div class="exp-card">
+        <img src="assets/surfing/surf.jpeg" alt="Surfing in Hikkaduwa">
+        <div class="exp-content">
+          <span>Southern Coast</span>
+          <h3>Ocean & Surf Breaks</h3>
+          <p>Championship reef breaks, coastal paddling, and tropical beachfronts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="home-footer">
+    <div class="footer-inner">
+      <a class="brand" routerLink="/">
+        <span class="brand-mark"><i class="bi bi-compass"></i></span>
+        <span>TicketSpot <span>Adventures</span></span>
+      </a>
+      <span class="tagline">Sri Lankan Adventure & Outdoor Events Platform</span>
+      <span class="copyright">© 2024 TicketSpot Adventures. Made for the beautifully adventurous.</span>
+    </div>
+  </footer>
+
+  <!-- Interactive Event Detail & Gallery Modal -->
+  <div class="modal-backdrop" *ngIf="selectedEvent" (click)="closeEventDetails()">
+    <div class="modal-window" (click)="$event.stopPropagation()">
+      <button type="button" class="modal-close-btn" (click)="closeEventDetails()" aria-label="Close modal">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <div class="modal-grid">
+        <!-- Gallery / Image View -->
+        <div class="modal-media">
+          <div class="main-preview">
+            <img [src]="activeGalleryImage || selectedEvent.image" [alt]="selectedEvent.title">
+          </div>
+          
+          <!-- Thumbnails (including personal achievement photos if available) -->
+          <div class="thumbnails-track" *ngIf="selectedEvent.gallery || selectedEvent.personalPhotos">
+            <!-- Main event image -->
+            <button
+              type="button"
+              class="thumb-btn"
+              [class.active]="activeGalleryImage === selectedEvent.image"
+              (click)="setGalleryImage(selectedEvent.image)"
+            >
+              <img [src]="selectedEvent.image" alt="Main cover">
+            </button>
+            
+            <!-- Gallery images -->
+            <button
+              *ngFor="let img of selectedEvent.gallery"
+              type="button"
+              class="thumb-btn"
+              [class.active]="activeGalleryImage === img"
+              (click)="setGalleryImage(img)"
+            >
+              <img [src]="img" alt="Gallery image">
+            </button>
+
+            <!-- Personal photos with distinct indicator -->
+            <button
+              *ngFor="let pimg of selectedEvent.personalPhotos"
+              type="button"
+              class="thumb-btn personal-thumb"
+              [class.active]="activeGalleryImage === pimg"
+              (click)="setGalleryImage(pimg)"
+              title="Personal event photo"
+            >
+              <img [src]="pimg" alt="Personal photo">
+              <span class="p-tag"><i class="bi bi-star-fill"></i></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Event Information Content -->
+        <div class="modal-details">
+          <span class="modal-badge" [class.badge-past]="selectedEvent.isPast" [class.badge-featured]="selectedEvent.status === 'featured'">
+            {{ selectedEvent.statusLabel }}
+          </span>
+
+          <h2>{{ selectedEvent.title }}</h2>
+
+          <div class="modal-meta">
+            <div>
+              <i class="bi bi-calendar3"></i>
+              <span><strong>Date:</strong> {{ selectedEvent.dates }}</span>
+            </div>
+            <div *ngIf="selectedEvent.startTime">
+              <i class="bi bi-clock"></i>
+              <span><strong>Start:</strong> {{ selectedEvent.startTime }}</span>
+            </div>
+            <div>
+              <i class="bi bi-geo-alt"></i>
+              <span><strong>Location:</strong> {{ selectedEvent.location }}</span>
+            </div>
+            <div>
+              <i class="bi bi-tag"></i>
+              <span><strong>Category:</strong> {{ selectedEvent.category }}</span>
+            </div>
+            <div *ngIf="selectedEvent.distance">
+              <i class="bi bi-speedometer2"></i>
+              <span><strong>Distance:</strong> {{ selectedEvent.distance }}</span>
+            </div>
+            <div *ngIf="selectedEvent.organizer">
+              <i class="bi bi-shield-check"></i>
+              <span><strong>Organizer:</strong> {{ selectedEvent.organizer }}</span>
+            </div>
+          </div>
+
+          <!-- Personal Achievement Highlight -->
+          <div class="achievement-box" *ngIf="selectedEvent.personalAchievement">
+            <i class="bi bi-award-fill"></i>
+            <div>
+              <strong>Personal Achievement</strong>
+              <p>{{ selectedEvent.personalAchievement }}</p>
+              <small class="text-muted">Personal photos from the event are displayed in the gallery above.</small>
+            </div>
+          </div>
+
+          <div class="modal-description">
+            <p>{{ selectedEvent.description }}</p>
+          </div>
+
+          <!-- Route Highlights -->
+          <div class="structured-section" *ngIf="selectedEvent.routeHighlights">
+            <h4><i class="bi bi-signpost-2"></i> Route Highlights</h4>
+            <ul class="check-list">
+              <li *ngFor="let h of selectedEvent.routeHighlights">
+                <i class="bi bi-check2"></i> {{ h }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Entry Types if present -->
+          <div class="structured-section" *ngIf="selectedEvent.entryTypes">
+            <h4><i class="bi bi-person-badge"></i> Entry Categories</h4>
+            <div class="chip-list">
+              <span *ngFor="let e of selectedEvent.entryTypes">{{ e }}</span>
+            </div>
+          </div>
+
+          <!-- Awards if present -->
+          <div class="structured-section" *ngIf="selectedEvent.awards">
+            <h4><i class="bi bi-trophy"></i> Awards & Recognition</h4>
+            <ul class="award-list">
+              <li *ngFor="let a of selectedEvent.awards">
+                <i class="bi bi-star"></i> {{ a }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Display Notes if present -->
+          <div class="structured-section" *ngIf="selectedEvent.displayNotes">
+            <h4><i class="bi bi-info-square"></i> Event Experience</h4>
+            <ul class="check-list">
+              <li *ngFor="let n of selectedEvent.displayNotes">
+                <i class="bi bi-check2"></i> {{ n }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Modal Footer CTA -->
+          <div class="modal-cta-box">
+            <a *ngIf="selectedEvent.bookingEnabled" routerLink="/event" class="modal-action-btn primary" (click)="closeEventDetails()">
+              Go to Booking Page <i class="bi bi-arrow-up-right"></i>
+            </a>
+            <div *ngIf="!selectedEvent.bookingEnabled" class="disabled-booking-notice">
+              <i class="bi bi-lock-fill"></i>
+              <span *ngIf="selectedEvent.isPast">Booking is disabled for past events.</span>
+              <span *ngIf="!selectedEvent.isPast && selectedEvent.status === 'future'">Date to be announced — Registration will open soon.</span>
+              <span *ngIf="!selectedEvent.isPast && selectedEvent.status === 'upcoming'">Adventure event preview — Forest Rail Run 2024 is currently active for booking.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
+

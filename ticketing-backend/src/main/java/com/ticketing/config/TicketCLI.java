@@ -59,14 +59,14 @@ public class TicketCLI implements CommandLineRunner {
 
         // Save the new ticket configuration
         Ticket newConfig = new Ticket();
-        newConfig.setEventName("Avatar");
+        newConfig.setEventName("Forest Rail Run 2024 (FRR'24)");
         newConfig.setTotalTickets(totalTickets);
         newConfig.setTicketReleaseRate(ticketReleaseRate);
         newConfig.setCustomerRetrievalRate(customerRetrievalRate);
         newConfig.setMaxTicketCapacity(maxTicketCapacity);
-        newConfig.setEventDate("2024-11-28");
-        newConfig.setEventTime("8:30 PM");
-        newConfig.setPrice(1500);
+        newConfig.setEventDate("2024-04-27");
+        newConfig.setEventTime("7:00 AM");
+        newConfig.setPrice(4500);
         ticketService.saveConfiguration(newConfig);
 
         System.out.println("Ticket configuration saved successfully.");
