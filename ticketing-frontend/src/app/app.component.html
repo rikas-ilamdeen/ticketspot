@@ -8,6 +8,7 @@
     <div class="nav-links">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All Events</a>
       <a routerLink="/event" routerLinkActive="active">Forest Rail Run 2024</a>
+      <a routerLink="/dashboard" routerLinkActive="active" *ngIf="isVendor()">Vendor dashboard</a>
       <a href="#upcoming">Upcoming 2024</a>
       <a href="#past-events">Past Events</a>
     </div>

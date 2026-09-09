@@ -69,7 +69,7 @@ export class LoginComponent {
           next: (response) => {
             console.log('Customer Login successful', response);
             // Store login data
-            sessionStorage.setItem('userSession', JSON.stringify(response));
+            sessionStorage.setItem('userSession', JSON.stringify({ ...response, role: 'customer' }));
             console.log('session' + sessionStorage.getItem('userSession'));
             alert('Customer Login successful!');
             this.router.navigate(['/event']);
@@ -87,7 +87,7 @@ export class LoginComponent {
           next: (response) => {
             console.log('Vendor Login successful', response);
             // Store login data
-            sessionStorage.setItem('userSession', JSON.stringify(response));
+            sessionStorage.setItem('userSession', JSON.stringify({ ...response, role: 'vendor' }));
             console.log('session' + sessionStorage.getItem('userSession'));
             alert('Vendor Login successful!');
             this.router.navigate(['/dashboard']);

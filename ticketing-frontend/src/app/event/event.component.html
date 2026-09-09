@@ -370,7 +370,7 @@
     </div>
 
     <!-- Right Column: Prominent Booking Card -->
-    <aside class="booking-card">
+    <aside class="booking-card" *ngIf="!isVendor()">
       <div class="availability">
         <span class="availability-dot"></span>
         <div class="availability-copy"><strong>{{ event.totalTickets || 0 }}</strong><span>spots currently available</span></div>

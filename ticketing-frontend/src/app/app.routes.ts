@@ -4,12 +4,13 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './signup/signup.component';
 import { EventComponent } from './event/event.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { vendorGuard } from './services/auth/role.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },  // Home route
   { path: 'login', component: LoginComponent },  // Login route
   { path: 'signup', component: SignUpComponent },  // SignUp route
   { path: 'event', component: EventComponent },  // Event route
-  { path: 'dashboard', component: DashboardComponent },  // Dashboard route
+  { path: 'dashboard', component: DashboardComponent, canActivate: [vendorGuard] },  // Dashboard route
   { path: '**', redirectTo: '' }  // Wildcard route to redirect invalid URLs to Home
 ];

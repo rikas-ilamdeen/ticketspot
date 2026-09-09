@@ -37,6 +37,11 @@ export class EventComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription | null = null;
 
+  isVendor(): boolean {
+    const session = JSON.parse(sessionStorage.getItem('userSession') || '{}');
+    return session.role === 'vendor';
+  }
+
   constructor(
     private webSocketService: WebSocketService,
     private eventService: EventService,

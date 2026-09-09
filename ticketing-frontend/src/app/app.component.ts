@@ -26,6 +26,11 @@ export class AppComponent {
   isEventPage(): boolean {
     return this.router.url === '/event' || this.router.url === '/dashboard';
   }
+
+  isVendor(): boolean {
+    const user = JSON.parse(sessionStorage.getItem('userSession') || '{}');
+    return user.role === 'vendor';
+  }
    // Method to log out
   logout() {
     sessionStorage.clear(); // Clear the session storage

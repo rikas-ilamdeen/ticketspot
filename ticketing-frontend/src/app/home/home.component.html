@@ -16,8 +16,11 @@
       </div>
 
       <div class="hero-actions">
-        <a class="primary-button" routerLink="/event">
+        <a class="primary-button" routerLink="/event" *ngIf="!isVendor()">
           Register & Book Now <i class="bi bi-arrow-up-right"></i>
+        </a>
+        <a class="primary-button" routerLink="/dashboard" *ngIf="isVendor()">
+          Open vendor dashboard <i class="bi bi-arrow-up-right"></i>
         </a>
         <a class="secondary-button" routerLink="/event">
           <i class="bi bi-info-circle"></i> Event Details
@@ -144,7 +147,7 @@
             </div>
 
             <div class="action-buttons">
-              <a *ngIf="event.bookingEnabled" routerLink="/event" class="card-btn btn-primary-action">
+              <a *ngIf="event.bookingEnabled && !isVendor()" routerLink="/event" class="card-btn btn-primary-action">
                 Book Event <i class="bi bi-arrow-up-right"></i>
               </a>
               <button
@@ -402,7 +405,7 @@
 
           <!-- Modal Footer CTA -->
           <div class="modal-cta-box">
-            <a *ngIf="selectedEvent.bookingEnabled" routerLink="/event" class="modal-action-btn primary" (click)="closeEventDetails()">
+            <a *ngIf="selectedEvent.bookingEnabled && !isVendor()" routerLink="/event" class="modal-action-btn primary" (click)="closeEventDetails()">
               Go to Booking Page <i class="bi bi-arrow-up-right"></i>
             </a>
             <div *ngIf="!selectedEvent.bookingEnabled" class="disabled-booking-notice">

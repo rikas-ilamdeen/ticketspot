@@ -30,6 +30,11 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
+  isVendor(): boolean {
+    const session = JSON.parse(sessionStorage.getItem('userSession') || '{}');
+    return session.role === 'vendor';
+  }
+
   selectCategory(category: string) {
     this.activeCategory = category;
   }
