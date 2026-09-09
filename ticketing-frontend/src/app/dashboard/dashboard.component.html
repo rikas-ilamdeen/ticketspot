@@ -1,48 +1,40 @@
-<div class="card mb-3">
-    <div class="row no-gutters">
-      <div class="col-md-4">
-        <img [src]="'assets/frr/frr.jpg'" class="card-img" alt="Forest Rail Run 2024">
+<main class="dashboard-page">
+  <section class="ticket-card" aria-labelledby="event-title">
+    <div class="event-image"><img [src]="'assets/frr/frr05.png'" alt="Forest Rail Run 2024"></div>
+    <div class="event-content">
+      <p class="eyebrow"><i class="bi bi-broadcast"></i> Live ticket pool</p>
+      <h1 id="event-title">{{ event.eventName || "Forest Rail Run 2024 (FRR'24)" }}</h1>
+      <div class="availability" aria-label="Available tickets">
+        <span class="availability-label">Spots currently available</span>
+        <strong>{{ event.totalTickets || 0 }}</strong>
+        <span class="availability-caption">Ready when you are</span>
       </div>
-      <div class="col-md-8">
-        <div  class="card-body">
-          <h5 class="card-title">{{ event.eventName || "Forest Rail Run 2024 (FRR'24)" }}</h5>
-          <p class="card-text">
-            <strong>Price:</strong><small class="text-muted"></small> {{ event.price || 'Description not available' }}
-          </p>
-          <p class="card-text">
-            <strong>Available Tickets:</strong><small class="text-muted"></small> {{ event.totalTickets || 'Description not available' }}
-          </p>
-          
-          <!-- Event Date and Time with Labels -->
-          <p class="card-text">
-            <strong>Date: </strong><small class="text-muted">{{ event.eventDate || 'Date not available' }}</small>
-          </p>
-          <p class="card-text">
-            <strong>Time: </strong><small class="text-muted">{{ event.eventTime || 'Time not available' }}</small>
-          </p>
-          
-          <button id="bookNowId" class="btn btn-primary" (click)="toggleSlide()">Add Ticket</button>
-        </div>
+      <div class="event-details">
+        <span><i class="bi bi-cash-stack"></i><b>Price</b> {{ event.price || 'Not available' }}</span>
+        <span><i class="bi bi-calendar3"></i><b>Date</b> {{ event.eventDate || 'Not available' }}</span>
+        <span><i class="bi bi-clock"></i><b>Time</b> {{ event.eventTime || 'Not available' }}</span>
       </div>
+      <button id="bookNowId" class="primary-action" type="button" (click)="toggleSlide()"><span>Add tickets</span><i class="bi bi-arrow-up-right"></i></button>
     </div>
-  </div>
+  </section>
+</main>
   
   <!-- Slide Panel -->
-  <div class="slide-panel" [class.open]="isSlideOpen">
-    <div class="card card-body">
-      <h5 class="card-title">Select Number of Tickets</h5>
-      <div class="input-group">
-        <button class="btn btn-outline-secondary" (click)="decreaseCount()">-</button>
-        <input type="text" class="form-control text-center" [value]="ticketCount" readonly>
-        <button class="btn btn-outline-secondary" (click)="increaseCount()">+</button>
+  <div class="slide-panel" [class.open]="isSlideOpen" aria-label="Add tickets panel">
+    <div class="panel-inner">
+      <button class="close-panel" type="button" aria-label="Close ticket panel" (click)="cancel()"><i class="bi bi-x-lg"></i></button>
+      <p class="eyebrow">Vendor controls</p><h2>Add tickets</h2>
+      <p class="panel-copy">Increase the live pool for this event.</p>
+      <div class="ticket-control">
+        <button type="button" aria-label="Decrease ticket count" (click)="decreaseCount()"><i class="bi bi-dash"></i></button>
+        <output aria-label="Tickets to add">{{ ticketCount }}</output>
+        <button type="button" aria-label="Increase ticket count" (click)="increaseCount()"><i class="bi bi-plus"></i></button>
       </div>
-      <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-success" (click)="addTicket()">Add Ticket</button>
-      </div>
-      <!-- Cancel button at the bottom -->
-      <div class="slide-footer d-flex justify-content-end mt-3">
-        <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
-      </div>
+      <p class="control-hint">Tickets to add</p>
+      <div class="status success" *ngIf="ticketSuccess"><i class="bi bi-check-circle-fill"></i>{{ ticketSuccess }}</div>
+      <div class="status error" *ngIf="ticketError"><i class="bi bi-exclamation-circle-fill"></i>{{ ticketError }}</div>
+      <button class="panel-action" type="button" (click)="addTicket()"><span>Add {{ ticketCount }} {{ ticketCount === 1 ? 'ticket' : 'tickets' }}</span><i class="bi bi-arrow-right"></i></button>
+      <button class="cancel-action" type="button" (click)="cancel()">Cancel</button>
     </div>
   </div>
   

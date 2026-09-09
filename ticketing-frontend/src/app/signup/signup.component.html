@@ -1,17 +1,18 @@
-<div class="sign-up-container">
-    <div class="sign-up-form">
-      <h2>Create an Account</h2>
-    <p class="signup-tagline">Join the adventure community!</p>
-  
-      <form (submit)="onSubmit()">
+<main class="auth-page signup-page">
+    <div class="sign-up-form auth-form" aria-labelledby="signup-title">
+      <div class="form-heading"><span class="form-icon"><i class="bi bi-person-plus"></i></span><div><p class="eyebrow">Start exploring</p><h2 id="signup-title">Create your account</h2></div></div>
+      <p class="signup-tagline">Join the adventure community and make your next outing count.</p>
+
+      <form (submit)="onSubmit()" #signupForm="ngForm" novalidate>
         <div class="form-row">
           <div class="form-group">
             <input
               id="name"
               type="text"
-              placeholder="Enter your name"
+              placeholder="Your full name"
               [(ngModel)]="signup.name"
               name="name"
+              required minlength="3"
               (input)="validateName()"
             />
             <span class="error-message" *ngIf="nameError">{{ nameError }}</span>
@@ -21,9 +22,10 @@
             <input
               id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="you@example.com"
               [(ngModel)]="signup.email"
               name="email"
+              required email
               (input)="validateEmail()"
             />
             <span class="error-message" *ngIf="emailError">{{ emailError }}</span>
@@ -35,9 +37,10 @@
             <input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="At least 6 characters"
               [(ngModel)]="signup.password"
               name="password"
+              required minlength="6"
               (input)="validatePassword()"
             />
             <span class="error-message" *ngIf="passwordError">{{ passwordError }}</span>
@@ -47,9 +50,10 @@
             <input
               id="phone"
               type="tel"
-              placeholder="Enter your phone number"
+              placeholder="10-digit phone number"
               [(ngModel)]="signup.phoneNumber"
               name="phone"
+              required pattern="[0-9]{10}"
               (input)="validatePhoneNumber()"
             />
             <span class="error-message" *ngIf="phoneError">{{ phoneError }}</span>
@@ -59,26 +63,12 @@
         <div class="form-group">
           <label for="user-type">Select User Type</label>
           <div class="user-type">
-            <input
-              type="radio"
-              id="vendor"
-              name="userType"
-              value="vendor"
-              [(ngModel)]="selectedRole"
-            />
-            Vendor
-            <input
-              type="radio"
-              id="customer"
-              name="userType"
-              value="customer"
-              [(ngModel)]="selectedRole"
-            />
-            Customer
+            <label class="role-option" [class.selected]="selectedRole === 'customer'" for="customer"><input type="radio" id="customer" name="userType" value="customer" [(ngModel)]="selectedRole" /> <i class="bi bi-person"></i><span>Customer</span></label>
+            <label class="role-option" [class.selected]="selectedRole === 'vendor'" for="vendor"><input type="radio" id="vendor" name="userType" value="vendor" [(ngModel)]="selectedRole" /> <i class="bi bi-shop"></i><span>Vendor</span></label>
           </div>
         </div>
   
-        <button type="submit" class="cta-button">Sign Up</button>
+        <button type="submit" class="cta-button" [disabled]="signupForm.invalid"><span>Create account</span><i class="bi bi-arrow-up-right"></i></button>
       </form>
     </div>
-  </div>
+</main>

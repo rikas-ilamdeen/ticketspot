@@ -1,57 +1,41 @@
-<div class="login-container">
-    <div class="login-left">
-      <div class="login-form">
-        <h2>Login to Your Account</h2>
-  
-        <form (submit)="onSubmit()" #loginForm="ngForm">
-          <div class="form-group">
-            <input
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              [(ngModel)]="loginData.email"
-              name="email"
-              (input)="validateEmail()"
-            />
-          </div>
-          <span class="error-message" *ngIf="emailError">{{ emailError }}</span>
-  
-          <div class="form-group">
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              [(ngModel)]="loginData.password"
-              name="password"
-              (input)="validatePassword()"
-            />
-          </div>
-          <span class="error-message" *ngIf="passwordError">{{ passwordError }}</span>
-  
-          <div class="form-group">
-            <label for="user-type">Select User Type</label>
-            <div class="user-type">
-              <input
-                type="radio"
-                id="vendor"
-                name="userType"
-                value="vendor"
-                [(ngModel)]="selectedRole"
-              />
-              Vendor
-              <input
-                type="radio"
-                id="customer"
-                name="userType"
-                value="customer"
-                [(ngModel)]="selectedRole"
-              />
-              Customer
-            </div>
-          </div>
-  
-          <button type="submit" class="cta-button" [disabled]="loginForm.invalid">Login</button>
-        </form>
-      </div>
+<main class="auth-page">
+  <section class="auth-panel" aria-labelledby="login-title">
+    <div class="auth-intro">
+      <span class="eyebrow"><i class="bi bi-compass"></i> TicketSpot Adventures</span>
+      <h1>Pick your next <em>adventure.</em></h1>
+      <p>Sign in to discover events, manage tickets, and keep every memorable route in one place.</p>
+      <div class="intro-note"><i class="bi bi-shield-check"></i><span>Secure access for customers and vendors</span></div>
     </div>
-  </div>
+
+    <div class="login-form auth-form">
+      <div class="form-heading">
+        <span class="form-icon"><i class="bi bi-arrow-right-circle"></i></span>
+        <div><p class="eyebrow">Welcome back</p><h2 id="login-title">Log in to your account</h2></div>
+      </div>
+      <p class="form-subtitle">Use your account details to continue.</p>
+
+      <form (submit)="onSubmit()" #loginForm="ngForm" novalidate>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input id="email" type="email" placeholder="you@example.com" [(ngModel)]="loginData.email" name="email" required email (input)="validateEmail()" [class.invalid]="emailError" />
+          <span class="error-message" *ngIf="emailError" role="alert"><i class="bi bi-exclamation-circle"></i> {{ emailError }}</span>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="At least 6 characters" [(ngModel)]="loginData.password" name="password" required minlength="6" (input)="validatePassword()" [class.invalid]="passwordError" />
+          <span class="error-message" *ngIf="passwordError" role="alert"><i class="bi bi-exclamation-circle"></i> {{ passwordError }}</span>
+        </div>
+
+        <fieldset class="role-fieldset">
+          <legend>Continue as</legend>
+          <div class="user-type">
+            <label class="role-option" [class.selected]="selectedRole === 'customer'" for="customer"><input type="radio" id="customer" name="userType" value="customer" [(ngModel)]="selectedRole" /> <i class="bi bi-person"></i><span>Customer</span></label>
+            <label class="role-option" [class.selected]="selectedRole === 'vendor'" for="vendor"><input type="radio" id="vendor" name="userType" value="vendor" [(ngModel)]="selectedRole" /> <i class="bi bi-shop"></i><span>Vendor</span></label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="cta-button" [disabled]="loginForm.invalid"><span>Log in</span><i class="bi bi-arrow-up-right"></i></button>
+      </form>
+    </div>
+  </section>
+</main>

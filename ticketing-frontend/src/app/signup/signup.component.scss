@@ -1,92 +1,18 @@
-body, html {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .sign-up-container {
-    background: linear-gradient(135deg,  #1b2737, #2151a5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 110vh;
-  }
-  .error-message {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: 5px;
-  }
-  
-  .sign-up-form {
-    margin: auto;
-    position: absolute;
-    top: 58%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    //width: 600px;
-  }
-  
-  h2 {
-    color: #114e6d;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  .signup-tagline {
-    text-align: center;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .form-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  
-  .form-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  
-  label {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-  }
-  
-  .user-type {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .cta-button {
-    background: #2575fc;
-    color: white;
-    padding: 15px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-top: 20px;
-  }
-  
-  .cta-button:hover {
-    background: #114e6d;
-  }
-  
+.signup-page { min-height: calc(100vh - 76px); padding: 45px 6vw; display: grid; place-items: center; background: radial-gradient(circle at 88% 12%, rgba(185,220,74,.2), transparent 25%), linear-gradient(135deg, #102722, #1e4b3e 55%, #d5e5a1); }
+.sign-up-form { width: min(100%, 760px); background: #fff; box-shadow: 0 24px 70px rgba(16,39,34,.25); border-radius: 10px; }
+.signup-tagline { margin: 14px 0 24px; color: #687770; font-size: .9rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 7px; margin-top: 18px; }
+.form-group label, .sign-up-form > form > .form-group > label { color: #30483e; font-size: .78rem; font-weight: 800; }
+.form-group input { width: 100%; padding: 14px 15px; border: 1px solid #d5dfd7; border-radius: 5px; outline: none; color: #18302a; background: #fbfcfa; transition: border-color .2s, box-shadow .2s; }
+.form-group input:focus { border-color: #78952b; box-shadow: 0 0 0 3px rgba(185,220,74,.22); }
+.error-message { color: #b44336; font-size: .74rem; }
+.sign-up-form .user-type { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sign-up-form .role-option { display: flex; align-items: center; gap: 8px; padding: 13px; border: 1px solid #d5dfd7; border-radius: 5px; color: #52655b; cursor: pointer; font-size: .85rem; font-weight: 700; }
+.sign-up-form .role-option.selected { border-color: #78952b; color: #173a31; background: #f3f8df; }
+.sign-up-form .role-option input { accent-color: #78952b; }
+.sign-up-form .role-option i { font-size: 1rem; }
+.sign-up-form .cta-button { width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 28px; padding: 15px; border: 0; border-radius: 5px; color: #102722; background: #b9dc4a; font-weight: 800; cursor: pointer; transition: transform .2s, background .2s; }
+.sign-up-form .cta-button:hover:not(:disabled) { transform: translateY(-2px); background: #cbe76c; }
+.sign-up-form .cta-button:disabled { opacity: .5; cursor: not-allowed; }
+@media (max-width: 600px) { .signup-page { padding: 24px 12px; } .form-row, .sign-up-form .user-type { grid-template-columns: 1fr; } }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { WebSocketService } from '../services/websocket/websocket.service';
 import { Event } from '../event/event.model';
 import { Subscription } from 'rxjs';
@@ -10,13 +11,15 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit, OnDestroy{
   isSlideOpen: boolean = false; // Track slide panel state
   ticketCount: number = 1; // Track the number of tickets
+  ticketSuccess = '';
+  ticketError = '';
 
   event: Event = {
     eventName: "Forest Rail Run 2024 (FRR'24)",
@@ -62,6 +65,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
   }
   toggleSlide() {
     this.isSlideOpen = !this.isSlideOpen; // Toggle the panel's visibility
+    this.ticketSuccess = '';
+    this.ticketError = '';
   }
 
   increaseCount() {
@@ -80,6 +85,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
   }
 
   addTicket() {
+    this.ticketSuccess = '';
+    this.ticketError = '';
     const vendorSession = JSON.parse(sessionStorage.getItem('userSession') || '{}');
     if (!vendorSession || !vendorSession.id) {
       alert('Please login to add tickets');
@@ -89,13 +96,14 @@ export class DashboardComponent implements OnInit, OnDestroy{
     this.vendorService.addTickets(vendorSession.id,this.ticketCount).subscribe({
       next: (response) => {
         console.log('Ticket added successful', response);
+        this.ticketSuccess = response.message || 'Tickets added successfully.';
+        this.ticketCount = 1;
         alert(response.message);
       },
       error: (err) => {
         console.error('Error adding ticket', err);
+        this.ticketError = 'Tickets could not be added. Please try again.';
       },
     });
-    this.isSlideOpen = false; // Close the slide panel after purchase
-    this.ticketCount = 1; // Reset the ticket count
   }
 }
