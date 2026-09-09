@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 import { EventComponent } from './event.component';
+import { EventService } from '../services/event/event.service';
+import { WebSocketService } from '../services/websocket/websocket.service';
+import { provideHttpClient } from '@angular/common/http';
+
+const eventServiceMock = { getEvent: () => of({ eventName: 'Test Event', totalTickets: 2 }) };
+const webSocketServiceMock = { connect: () => of(), disconnect: () => undefined };
 
 describe('EventComponent', () => {
   let component: EventComponent;
@@ -8,7 +15,12 @@ describe('EventComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EventComponent]
+      imports: [EventComponent],
+      providers: [
+        provideHttpClient(),
+        { provide: EventService, useValue: eventServiceMock },
+        { provide: WebSocketService, useValue: webSocketServiceMock }
+      ]
     })
     .compileComponents();
 

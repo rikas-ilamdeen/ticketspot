@@ -1,10 +1,12 @@
-frontend/node_modules/
-
-backend/target/
+ticketing-frontend/node_modules/
+ticketing-frontend/dist/
+ticketing-frontend/.angular/
+ticketing-frontend/coverage/
+ticketing-backend/target/
 
 # IDE-specific files
 .vscode/
-.idea/
+**/.idea/
 
 Thumbs.db      # Windows system files
 

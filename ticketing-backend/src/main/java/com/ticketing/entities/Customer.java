@@ -1,6 +1,7 @@
 package com.ticketing.entities;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -21,8 +22,9 @@ public class Customer {
     @NotEmpty(message = "Name cannot be empty")
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @NotEmpty(message = "Password cannot be empty")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column
@@ -89,7 +91,6 @@ public class Customer {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }

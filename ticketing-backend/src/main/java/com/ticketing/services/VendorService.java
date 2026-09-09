@@ -1,6 +1,5 @@
 package com.ticketing.services;
 
-import com.ticketing.entities.Customer;
 import com.ticketing.entities.Vendor;
 import com.ticketing.repositories.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ public class VendorService {
     @Autowired
     private VendorRepository vendorRepository;
 
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public Vendor registerVendor(Vendor vendor) {
         // Check if email already exists
@@ -25,8 +24,7 @@ public class VendorService {
             throw new IllegalArgumentException("Email already registered.");
         }
 
-        // Hash password before saving
-//        vendor.setPassword(bCryptPasswordEncoder.encode(vendor.getPassword()));
+        vendor.setPassword(bCryptPasswordEncoder.encode(vendor.getPassword()));
 
         // Save the new vendor
         return vendorRepository.save(vendor);
@@ -40,10 +38,9 @@ public class VendorService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
-        // Verify the hashed password
-//        if (!bCryptPasswordEncoder.matches(password, vendor.getPassword())) {
-//            throw new IllegalArgumentException("Invalid email or password.");
-//        }
+        if (!bCryptPasswordEncoder.matches(password, vendor.getPassword())) {
+            throw new IllegalArgumentException("Invalid email or password.");
+        }
 
         return vendor;
     }
@@ -67,10 +64,9 @@ public class VendorService {
         vendor.setEmail(vendorDetails.getEmail());
         vendor.setName(vendorDetails.getName());
 
-        // Hash the password if it's updated
-//        if (!vendorDetails.getPassword().equals(vendor.getPassword())) {
-//            vendor.setPassword(bCryptPasswordEncoder.encode(vendorDetails.getPassword()));
-//        }
+        if (vendorDetails.getPassword() != null && !vendorDetails.getPassword().isBlank()) {
+            vendor.setPassword(bCryptPasswordEncoder.encode(vendorDetails.getPassword()));
+        }
 
         return vendorRepository.save(vendor);
     }

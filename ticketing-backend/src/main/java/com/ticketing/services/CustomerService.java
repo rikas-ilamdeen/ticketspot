@@ -13,7 +13,7 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public Customer registerCustomer(Customer customer) {
         // Check if email already exists
@@ -23,8 +23,7 @@ public class CustomerService {
             throw new IllegalArgumentException("Email already registered.");
         }
 
-        // Hash password before saving
-//        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
 
         // Save the new customer
         return customerRepository.save(customer);
@@ -38,10 +37,9 @@ public class CustomerService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 
-        // Verify the hashed password
-//        if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
-//            throw new IllegalArgumentException("Invalid email or password.");
-//        }
+        if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
+            throw new IllegalArgumentException("Invalid email or password.");
+        }
 
         return customer;
     }
@@ -66,10 +64,9 @@ public class CustomerService {
         customer.setEmail(customerDetails.getEmail());
         customer.setName(customerDetails.getName());
 
-        // Hash the password if it's updated
-//        if (!customerDetails.getPassword().equals(customer.getPassword())) {
-//            customer.setPassword(bCryptPasswordEncoder.encode(customerDetails.getPassword()));
-//        }
+        if (customerDetails.getPassword() != null && !customerDetails.getPassword().isBlank()) {
+            customer.setPassword(bCryptPasswordEncoder.encode(customerDetails.getPassword()));
+        }
 
         return customerRepository.save(customer);
     }
