@@ -3,12 +3,14 @@ package com.ticketing.config;
 import com.ticketing.entities.Ticket;
 import com.ticketing.services.TicketService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 import java.util.Optional;
 
 @Component
+@ConditionalOnProperty(prefix = "ticketspot.cli", name = "enabled", havingValue = "true")
 public class TicketCLI implements CommandLineRunner {
 
     private final TicketService ticketService;
