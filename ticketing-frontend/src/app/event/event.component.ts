@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { WebSocketService } from '../services/websocket/websocket.service';
 import { Event } from './event.model'; 
 import { Subscription } from 'rxjs';
@@ -10,7 +12,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-event',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterLink],
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss'
 })
@@ -19,10 +21,10 @@ export class EventComponent  implements OnInit, OnDestroy{
   ticketCount: number = 1; // Track the number of tickets
 
   event: Event = {
-    eventName: '',
-    eventDate: '',
-    eventTime: '',
-    price: 0.0,
+    eventName: 'HIGHLANDERS Ella Run 2026',
+    eventDate: 'Sat, 19 Sep 2026',
+    eventTime: '6:00 AM (+0530)',
+    price: 4500,
     totalTickets: 0
   }; // Initialize the event with default values
   private subscription: Subscription | null = null;
@@ -43,7 +45,11 @@ export class EventComponent  implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.eventService.getEvent().subscribe({
       next: (event) => {
-        this.event = event;
+        this.event = {
+          ...this.event,
+          totalTickets: event.totalTickets ?? this.event.totalTickets,
+          price: event.price ?? this.event.price
+        };
         console.log('Event fetched:', event);
       },
       error: (err) => {

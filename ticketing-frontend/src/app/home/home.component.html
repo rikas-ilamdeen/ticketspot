@@ -1,69 +1,45 @@
-<div class="hero-section">
-  <div class="container">
-    <h1>Discover and Book Tickets for Your Next Event</h1>
-    <p>Book your next adventure in just a few clicks and enjoy the event, stress-free!</p>
-    <button class="cta-button" (click)="startSignup()">Create an account</button>
-  </div>
-</div>
-
-<div id="about" class="about-section">
-  <div class="container">
-    <h2>About</h2>
-    <p>
-      TicketSpot is more than just a booking platform. It's designed to help users find, book, and manage tickets for events with ease.<br> 
-      We provide reliable services and a user-friendly experience.
-    </p>
-  </div>
-</div>
-
-<div id="features" class="features-section">
-  <div class="container">
-    <h2>Features</h2>
-    <div class="feature-grid">
-      <div class="feature-box">
-        <h4>Easy Booking</h4>
-        <p>Book tickets with just a few clicks.</p>
+<main class="home-page">
+  <section class="hero-wrap">
+    <div class="hero-copy">
+      <p class="eyebrow"><span></span> Adventure starts here</p>
+      <h1>Find your next<br><em>way out.</em></h1>
+      <p class="hero-intro">Curated outdoor experiences across Sri Lanka for people who would rather be somewhere else.</p>
+      <div class="hero-actions">
+        <a class="primary-button" routerLink="/event">Explore the featured event <i class="bi bi-arrow-up-right"></i></a>
+        <a class="play-link" href="#how-it-works"><span><i class="bi bi-play-fill"></i></span> How TicketSpot works</a>
       </div>
-      <div class="feature-box">
-        <h4>Fast Event Updates</h4>
-        <p>Stay updated with the latest event information.</p>
-      </div>
-      <div class="feature-box">
-        <h4>Ticket availability</h4>
-        <p>See current ticket availability as event updates arrive.</p>
-      </div>
+      <div class="hero-proof"><div class="proof-avatars"><span>AT</span><span>RS</span><span>MN</span></div><span>Join 2,400+ weekend explorers</span></div>
     </div>
-  </div>
-</div>
+    <div class="hero-image">
+      <img src="assets/ella-run.jpg" alt="HIGHLANDERS Ella Run 2026 event poster">
+      <div class="image-stamp"><span>FEATURED</span><strong>01</strong><small>/ 03</small></div>
+      <div class="floating-event-card"><span><i class="live-dot"></i>Next up in Ella</span><strong>19 <small>SEP</small></strong></div>
+    </div>
+  </section>
 
-<div id="contact" class="contact-section">
-  <div class="container">
-    <h2>Contact Us</h2>
-    <p>We'd love to hear from you! Get in touch with us for any queries or feedback.</p>
+  <section class="category-strip" aria-label="Adventure categories">
+    <div class="section-label">Explore by mood</div>
+    <div class="category-list">
+      <button *ngFor="let category of categories" type="button" [class.selected]="activeCategory === category.label" (click)="selectCategory(category.label)"><i class="bi" [ngClass]="category.icon"></i>{{ category.label }}</button>
+    </div>
+  </section>
 
-    <form>
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required />
-      </div>
+  <section class="event-section" id="discover">
+    <div class="section-heading"><div><p class="eyebrow dark"><span></span> Handpicked for you</p><h2>Make a day<br><em>of it.</em></h2></div><a routerLink="/event" class="arrow-link">View all adventures <i class="bi bi-arrow-up-right"></i></a></div>
+    <div class="event-grid">
+      <a class="event-card" *ngFor="let event of filteredEvents()" routerLink="/event">
+        <div class="event-image"><img [src]="event.image" [alt]="event.title"><span class="event-type" [class]="event.accent">{{ event.type }}</span><button type="button" class="save-button" aria-label="Save event"><i class="bi bi-bookmark"></i></button></div>
+        <div class="event-card-body"><p class="event-date">{{ event.date }}</p><h3>{{ event.title }}</h3><p class="event-location"><i class="bi bi-geo-alt"></i>{{ event.location }}</p><div class="event-card-footer"><span>From <strong>LKR 4,500</strong></span><i class="bi bi-arrow-up-right"></i></div></div>
+      </a>
+    </div>
+  </section>
 
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="Enter your email" required />
-      </div>
+  <section class="destination-section" id="destinations">
+    <div class="section-heading compact"><div><p class="eyebrow dark"><span></span> Pick a direction</p><h2>Go beyond<br>the <em>usual.</em></h2></div><p class="section-note">From highland sunrises to saltwater afternoons, find a reason to take the scenic route.</p></div>
+    <div class="destination-grid"><a class="destination-card" *ngFor="let destination of destinations" routerLink="/event"><img [src]="destination.image" [alt]="destination.name"><div><span>{{ destination.note }}</span><h3>{{ destination.name }} <i class="bi bi-arrow-up-right"></i></h3></div></a></div>
+  </section>
 
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" placeholder="Your message..." required></textarea>
-      </div>
+  <section class="how-section" id="how-it-works"><p class="eyebrow"><span></span> Your next story</p><h2>Three taps from<br><em>somewhere better.</em></h2><div class="steps"><div><b>01</b><i class="bi bi-compass"></i><h3>Choose your escape</h3><p>Browse real experiences by place, pace, and how far you want to wander.</p></div><div><b>02</b><i class="bi bi-ticket-perforated"></i><h3>Reserve your spot</h3><p>Pick your tickets and keep the adventure planning wonderfully simple.</p></div><div><b>03</b><i class="bi bi-sunrise"></i><h3>Show up curious</h3><p>Meet your crew, breathe in the view, and make the day count.</p></div></div></section>
 
-      <button type="submit" class="submit-btn">Send Message</button>
-    </form>
-  </div>
-</div>
-
-<div class="footer-section">
-  <div class="container">
-    <p>&copy; 2024 ticketing-system by rikas.ilamdeen</p>
-  </div>
-</div>
+  <footer class="home-footer"><a class="brand" routerLink="/"><span class="brand-mark">T</span><span>Ticket<span>Spot</span></span></a><span>Made for the beautifully restless.</span><span>© 2026 TicketSpot Sri Lanka</span></footer>
+</main>

@@ -1,49 +1,11 @@
-<a class="logout-btn">Logout</a>
-
-<div class="card mb-3 stylish-card">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img [src]="'assets/avatar.jpeg'" class="card-img img-fluid" alt="Event Image">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{ event.eventName || 'Event Title' }}</h5>
-        <p class="card-text">
-          <strong>Price:</strong><small class="text-muted"></small> {{ event.price || 'Description not available' }}
-        </p>
-        <p class="card-text">
-          <strong>Available Tickets:</strong><small class="text-muted"></small> {{ event.totalTickets || 'Description not available' }}
-        </p>
-        
-        <!-- Event Date and Time with Labels -->
-        <p class="card-text">
-          <strong>Date: </strong><small class="text-muted">{{ event.eventDate || 'Date not available' }}</small>
-        </p>
-        <p class="card-text">
-          <strong>Time: </strong><small class="text-muted">{{ event.eventTime || 'Time not available' }}</small>
-        </p>
-
-        <button id="bookNowId" class="btn btn-primary" (click)="toggleSlide()">Book Now</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Slide Panel -->
-<div class="slide-panel" [class.open]="isSlideOpen">
-  <div class="card card-body">
-    <h5 class="card-title">Select Number of Tickets</h5>
-    <div class="input-group">
-      <button class="btn btn-outline-secondary" (click)="decreaseCount()">-</button>
-      <input type="text" class="form-control text-center" [value]="ticketCount" readonly>
-      <button class="btn btn-outline-secondary" (click)="increaseCount()">+</button>
-    </div>
-    <div class="d-flex justify-content-between mt-3">
-      <button class="btn btn-success" (click)="purchase()">Pay Now</button>
-    </div>
-    <!-- Cancel button at the bottom -->
-    <div class="slide-footer d-flex justify-content-end mt-3">
-      <button class="btn btn-dark" (click)="cancel()">Cancel</button>
-    </div>
-  </div>
-</div>
+<main class="event-page">
+  <div class="event-breadcrumb"><a routerLink="/">Discover</a><i class="bi bi-chevron-right"></i><span>Featured adventure</span></div>
+  <section class="event-hero">
+    <div class="event-poster"><img src="assets/frr/frr6.jpg" alt="Forest Rail Run 2024 (FRR’24) poster"><span class="poster-label">CROSSWINDS ADVENTURES</span></div>
+    <div class="event-overview"><p class="event-kicker">Trail running <span>·</span> Ohiya, Sri Lanka</p><h1>{{ event.eventName }}</h1><p class="event-tagline">Run above the clouds.</p><p class="event-description">A highland trail experience through Ella's misty ridgelines, tea country, and big open skies. Come for the finish line. Stay for the view.</p><div class="event-meta"><div><i class="bi bi-calendar3"></i><span><small>Date</small>Sat, 19 Sep 2026</span></div><div><i class="bi bi-clock"></i><span><small>Flag off</small>6:00 AM (+0530)</span></div><div><i class="bi bi-geo-alt"></i><span><small>Venue</small>Ella Walauwwa, Mawela</span></div></div><div class="organizer"><span class="organizer-avatar">C</span><span>Organized by <strong>Crosswinds Adventures</strong></span><span class="verified"><i class="bi bi-patch-check-fill"></i> Verified</span></div></div>
+  </section>
+  <section class="booking-layout">
+    <div class="event-info"><div class="info-tabs"><button class="active" type="button">About this adventure</button><button type="button">Good to know</button></div><h2>One route. <em>Endless views.</em></h2><p>Set off from Ella Walauwwa and follow a course shaped by the island's most cinematic landscapes. Expect mountain air, warm local support, and a finish you'll talk about long after the legs recover.</p><div class="experience-points"><div><i class="bi bi-tree"></i><span><strong>Highland terrain</strong><small>Tea trails, forest paths, and cloud country.</small></span></div><div><i class="bi bi-people"></i><span><strong>Open to everyone</strong><small>Local and international participants welcome.</small></span></div><div><i class="bi bi-heart-pulse"></i><span><strong>Run your pace</strong><small>Come for the challenge or the atmosphere.</small></span></div></div></div>
+    <aside class="booking-card"><div class="availability"><span class="availability-dot"></span><span>{{ event.totalTickets || 0 }} spots currently available</span></div><h2>Choose your<br><em>entry.</em></h2><div class="ticket-row"><div><strong>General entry</strong><small>Race access + event bib</small></div><span class="ticket-price">LKR {{ event.price | number:'1.0-0' }}</span></div><div class="quantity-row"><span>How many?</span><div class="quantity-control"><button type="button" aria-label="Decrease tickets" (click)="decreaseCount()">−</button><strong>{{ ticketCount }}</strong><button type="button" aria-label="Increase tickets" (click)="increaseCount()">+</button></div></div><div class="total-row"><span>Total</span><strong>LKR {{ (event.price || 0) * ticketCount | number:'1.0-0' }}</strong></div><button class="book-button" type="button" (click)="purchase()">Reserve my spot <i class="bi bi-arrow-up-right"></i></button><p class="secure-note"><i class="bi bi-shield-check"></i> Your spot is held while the booking is confirmed.</p></aside>
+  </section>
+</main>

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { provideRouter } from '@angular/router';
 
 import { EventComponent } from './event.component';
 import { EventService } from '../services/event/event.service';
@@ -18,6 +19,7 @@ describe('EventComponent', () => {
       imports: [EventComponent],
       providers: [
         provideHttpClient(),
+        provideRouter([]),
         { provide: EventService, useValue: eventServiceMock },
         { provide: WebSocketService, useValue: webSocketServiceMock }
       ]

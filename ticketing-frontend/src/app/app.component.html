@@ -1,19 +1,24 @@
 <nav class="navbar">
-    <div class="container">
-      <div class="logo-text">TicketSpot</div>
-      <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="/event">Event</a></li>
-      </ul>
-      <p class="text-white font-weight-bold"><span class="user-name">{{isNameAvailable()}}</span></p>
-      <div class="auth-buttons">
-        <a *ngIf="!isEventPage() || !isUserLoggedIn()"  class="login-btn" href="/login">Login</a>
-        <a *ngIf="!isEventPage() || !isUserLoggedIn()"  class="signup-btn" href="/signup">Sign Up</a>
-        <button *ngIf="isEventPage() && isUserLoggedIn()"  class="logout-btn" (click)="logout()" >Log out</button>
-      </div>
+  <div class="nav-inner">
+    <a class="brand" routerLink="/" aria-label="TicketSpot home">
+      <span class="brand-mark">T</span>
+      <span>Ticket<span>Spot</span></span>
+    </a>
+
+    <div class="nav-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Discover</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#how-it-works">How it works</a>
     </div>
-  </nav>
+
+    <div class="nav-actions">
+      <span class="welcome" *ngIf="isUserLoggedIn()">{{ isNameAvailable() }}</span>
+      <a class="text-link" routerLink="/login" *ngIf="!isUserLoggedIn()">Log in</a>
+      <a class="nav-cta" routerLink="/signup" *ngIf="!isUserLoggedIn()">Join TicketSpot</a>
+      <button class="icon-button" type="button" aria-label="Log out" title="Log out" *ngIf="isUserLoggedIn()" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</nav>
 <router-outlet></router-outlet>
